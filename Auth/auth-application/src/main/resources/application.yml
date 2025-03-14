@@ -1,0 +1,5 @@
+spring:
+  config:
+    name: auth
+  profiles:
+    active: dev

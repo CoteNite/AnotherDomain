@@ -1,6 +1,20 @@
+
+
+pluginManagement {
+    plugins {
+        kotlin("jvm") version "2.1.10"
+    }
+}
 dependencyResolutionManagement {
     @Suppress("UnstableApiUsage")
     repositories {
+        mavenLocal()
+        maven {
+            setUrl("https://maven.aliyun.com/repository/public/")
+        }
+        maven {
+            setUrl("https://mirrors.huaweicloud.com/repository/maven/")
+        }
         mavenCentral()
     }
 }
@@ -10,6 +24,11 @@ plugins {
 }
 
 
+
 rootProject.name = "AnotherDomain"
-include("auth")
 include("commons")
+include("Auth")
+include("Auth:auth-application")
+findProject(":Auth:auth-application")?.name = "auth-application"
+include("Auth:auth-domain")
+findProject(":Auth:auth-domain")?.name = "auth-domain"
