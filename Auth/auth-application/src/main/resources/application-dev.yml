@@ -12,7 +12,7 @@ spring:
       timeout: 10s
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/another-domain
+    url: jdbc:mysql://localhost:3306/another_domain
     username: root
     password: ${database.password}
   mail:

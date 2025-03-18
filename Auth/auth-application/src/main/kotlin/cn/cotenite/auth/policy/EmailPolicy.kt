@@ -1,4 +1,4 @@
-package cn.cotenite.auth.commons.utils
+package cn.cotenite.auth.policy
 
 
 import cn.cotenite.auth.command.VerifyCommand

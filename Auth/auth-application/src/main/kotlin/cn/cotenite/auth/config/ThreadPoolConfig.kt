@@ -15,7 +15,7 @@ import java.util.concurrent.ThreadPoolExecutor
 class ThreadPoolConfig {
 
     @Bean
-    fun taskExecutor():Executor{
+    fun taskExecutor():ThreadPoolTaskExecutor{
         val executor = ThreadPoolTaskExecutor()
         executor.corePoolSize = 10
         executor.maxPoolSize = 50

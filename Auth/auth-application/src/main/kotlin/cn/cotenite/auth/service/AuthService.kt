@@ -2,12 +2,10 @@ package cn.cotenite.auth.service
 
 import cn.cotenite.auth.command.UserCommand
 import cn.cotenite.auth.command.VerifyCommand
-import cn.cotenite.auth.commons.utils.EmailPolicy
+import cn.cotenite.auth.policy.EmailPolicy
 import cn.cotenite.auth.commons.utils.RedisKeyCreator
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
-import cn.cotenite.expection.BusinessException
 import cn.dev33.satoken.stp.StpUtil
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
