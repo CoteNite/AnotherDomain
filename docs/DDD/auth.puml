@@ -1,0 +1,197 @@
+@startuml
+
+!include components.puml
+
+skinparam dpi 800
+
+Person(user)[
+    用户
+]
+
+Command(emailCode)[
+    发送邮箱验证码
+    --field--
+      verifyKey(email)
+      verifyCode
+    --rules--
+    1.只有在key不存在的时候才能生成验证码
+    2.验证码3分钟过期
+
+]
+
+Command(nonKeyCode)[
+    key无法被用户指定的验证码
+    --rules--
+    1.验证码3分钟过期
+]
+
+Command(resetPassword)[
+    重置密码
+    --field--
+      verifyKey
+      verifyCode
+      password
+    --rules--
+    1.验证邮箱验证码是否正确
+    2.验证用户是否存在
+    3.验证密码是否正确
+]
+
+
+Aggregate(verify)[
+    验证码校验聚合
+    --id--
+      verifyKey
+    --filed--
+    判断验证码是否已经过期
+    判断验证码是否正确
+]
+
+Event(existed)[
+    验证码已保存
+    --field--
+      verifyKey
+      verifyCode
+]
+
+Service(authService)[
+    验证码校验服务
+    --filed--
+      登录注册后对验证码进行校验
+]
+
+Event(deleted)[
+    验证码已删除
+    --field--
+      verifyKey
+      verifyCode
+]
+
+ReadModel(rd_verifyCode)[
+    验证码校验读模型
+    --id--
+      verifyKey
+    --filed--
+      verifyCode
+      verifyTime
+      expireTime(默认为三分钟)
+]
+
+
+
+Command(register)[
+    注册
+    --field--
+      email
+      password
+      verifyCode
+    --rules--
+    1.验证验证码是否正确
+    2.验证用户是否存在
+]
+
+Command(login)[
+    登录
+    --field--
+      email
+      password
+      verifyKey
+      verifyCode
+    --rules--
+    1.验证验证码是否正确
+    2.验证用户是否存在
+    3.验证密码是否正确
+]
+
+Event(user_registered)[
+    用户已注册
+    --field--
+    email
+]
+
+Event(user_logined)[
+    用户已登录
+    --field--
+    userId
+    password
+    verifyKey
+    verifyCode
+]
+
+Aggregate(auth)[
+    验证聚合
+    --id--
+      email
+    --filed--
+    每一个操作都要先验证验证码
+    验证用户是否存在
+    验证密码是否正确
+]
+
+ReadModel(rd_userDetail)[
+    用户详情读模型
+    --id--
+      id(userId)
+    --filed--
+      email
+      githubNumber
+      nickname
+      gender
+      desc
+]
+
+Policy(saToken)[
+    saToken框架，用于验证登录等
+]
+
+Command(create_userRole)[
+    为用户申请角色
+    --field--
+      userId
+      role
+]
+
+Command(verifyCode)[
+    对验证码进行校验
+    --field--
+      verifyKey
+      verifyCode
+]
+
+Event(user_non_registered)[
+    用户未注册
+    --field--
+      verifyKey
+      verifyCode
+]
+
+
+user -down-> emailCode
+user -down-> nonKeyCode
+emailCode -down-> verify
+nonKeyCode -down-> verify
+verify -down-> existed
+verify -down-> deleted
+existed -down-> rd_verifyCode
+deleted -down-> rd_verifyCode
+user -down-> register
+user -down-> login
+register -down-> auth
+login -down-> auth
+user_registered -down-> authService
+authService -down-> verifyCode
+verifyCode -down-> verify
+auth -down-> user_registered
+auth -down-> user_logined
+user_registered -down-> rd_userDetail
+user_logined -down-> create_userRole
+user_logined -down-> saToken
+
+user_logined -down-> authService
+
+
+
+
+
+
+@enduml

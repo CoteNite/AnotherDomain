@@ -1,0 +1,19 @@
+export cn.cotenite.auth.model.domain.User
+    -> package cn.cotenite.auth.model.domain.dto.dto
+
+import jakarta.validation.constraints.Pattern
+
+input UserInput {
+    email
+    userId
+    password
+    userNumber
+}
+
+input ResetPasswordInput {
+    @Pattern(regexp = "\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}", message = "邮箱格式不正确")
+    email
+    password
+    verifyCode:String
+}
+
