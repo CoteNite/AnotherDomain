@@ -1,26 +1,13 @@
 plugins {
     kotlin("jvm")
-    kotlin("plugin.spring") version "2.1.10"
+    kotlin("plugin.spring") version "1.9.20"
     id("org.springframework.boot") version "3.4.3"
     id("io.spring.dependency-management") version "1.1.7"
-    id("com.google.devtools.ksp") version "2.1.10-1.0.31"
+    id("com.google.devtools.ksp") version "1.9.20-1.0.14"
 }
 
 group = "cn.cotenite"
 version = "0.0.1"
-
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-    }
-}
-
-kotlin{
-    sourceSets.main {
-        kotlin.srcDir("build/generated/ksp/main/kotlin")
-    }
-}
-
 
 val jimmerVersion = "0.9.66"
 val mysqlConnectVersion = "8.0.30"
@@ -47,7 +34,6 @@ dependencies {
     implementation("cn.dev33:sa-token-spring-boot3-starter:${satokenVersion}")
     implementation("org.springframework.security:spring-security-crypto:${bcryptVersion}")
 
-
     runtimeOnly("mysql:mysql-connector-java:${mysqlConnectVersion}")
 
     ksp("org.babyfish.jimmer:jimmer-ksp:${jimmerVersion}")
@@ -58,9 +44,21 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation(project(":Auth:auth-application"))
 }
 
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+
 kotlin {
+    sourceSets.main {
+        kotlin.srcDir("build/generated/ksp/main/kotlin")
+    }
     compilerOptions {
         freeCompilerArgs.addAll("-Xjsr305=strict")
     }

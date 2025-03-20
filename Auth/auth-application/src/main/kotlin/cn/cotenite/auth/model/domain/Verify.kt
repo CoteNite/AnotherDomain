@@ -6,7 +6,7 @@ package cn.cotenite.auth.model.domain
  * @Description
  * @Date  2025/3/16 03:26
  */
-class VerifyAgg(
+class Verify(
     private val verifyKey:String,
     private val verifyCode:String,
 ){

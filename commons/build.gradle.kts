@@ -1,6 +1,6 @@
 plugins {
     kotlin("jvm")
-    id("com.google.devtools.ksp") version "2.1.10-1.0.31"
+    id("com.google.devtools.ksp") version "1.9.20-1.0.14"
 }
 
 group = "cn.cotenite"
@@ -25,8 +25,13 @@ dependencies {
     ksp("org.babyfish.jimmer:jimmer-ksp:${jimmerVersion}")
 }
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
 kotlin {
-    jvmToolchain(17)
     sourceSets.main {
         kotlin.srcDir("build/generated/ksp/main/kotlin")
     }

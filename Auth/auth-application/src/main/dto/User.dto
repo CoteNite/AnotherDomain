@@ -1,7 +1,8 @@
-export cn.cotenite.auth.model.domain.User
+export cn.cotenite.auth.model.domain.agg.User
     -> package cn.cotenite.auth.model.domain.dto.dto
 
 import jakarta.validation.constraints.Pattern
+
 
 input UserInput {
     email

@@ -1,7 +1,7 @@
 package cn.cotenite.auth.repo
 
 import cn.cotenite.auth.commons.utils.RedisKeyCreator
-import cn.cotenite.auth.model.domain.VerifyAgg
+import cn.cotenite.auth.model.domain.Verify
 import cn.cotenite.expection.BusinessException
 import cn.cotenite.utils.RandomKeyCreator
 import org.redisson.api.RedissonClient
@@ -19,8 +19,8 @@ class VerifyRepository(
     @Autowired
     private val redissonClient: RedissonClient
 ){
-    fun getVerifyAgg(key:String): VerifyAgg {
-        return VerifyAgg(key,redissonClient.getBucket<String>(key).get()?:throw BusinessException("验证码不存在"))
+    fun getVerifyAgg(key:String): Verify {
+        return Verify(key,redissonClient.getBucket<String>(key).get()?:throw BusinessException("验证码不存在"))
     }
 
     fun saveLoginKey(code:String):String{

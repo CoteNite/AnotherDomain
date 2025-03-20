@@ -8,7 +8,7 @@ import cn.hutool.core.util.IdUtil
  * @Description
  * @Date  2025/3/16 12:12
  */
-object SnowFlakeGenerator{
+object SnowFlakeUtils{
 
     fun generate(): Long {
         val snowflake = IdUtil.getSnowflake(1, 1)

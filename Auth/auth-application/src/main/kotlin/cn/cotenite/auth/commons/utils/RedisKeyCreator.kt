@@ -23,4 +23,7 @@ object RedisKeyCreator : RedisKeyBase() {
         return PREFIX+"resetPassword:${email}"
     }
 
+    fun userPermissionHashKey(userId:Long):String {
+        return PREFIX+"userPermission:${userId}"
+    }
 }

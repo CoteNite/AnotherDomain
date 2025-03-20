@@ -1,10 +1,15 @@
-package cn.cotenite.auth.model.domain
+package cn.cotenite.auth.model.domain.agg
 
 import cn.cotenite.auth.commons.enums.Delete
+import cn.cotenite.auth.commons.utils.SnowflakeIdGenerator
+import cn.cotenite.auth.model.po.Permission
+import cn.cotenite.auth.model.po.Role
 import cn.cotenite.expection.BusinessException
+import org.babyfish.jimmer.Immutable
 import org.babyfish.jimmer.sql.*
 import org.springframework.security.crypto.bcrypt.BCrypt
 import java.time.LocalTime
+import java.util.Arrays
 
 /**
  * @Author  RichardYoung
@@ -15,6 +20,10 @@ import java.time.LocalTime
 interface User{
 
     @Id
+    @GeneratedValue(generatorType = SnowflakeIdGenerator::class)
+    val id:Long
+
+    @Key
     val email:String
 
     val userId:Long
@@ -22,6 +31,11 @@ interface User{
     val password:String
 
     val userNumber:String
+
+    @ManyToMany
+    @JoinTable(name = "user_role")
+    val roles:List<Role>
+
 
     val createTime:LocalTime
 
