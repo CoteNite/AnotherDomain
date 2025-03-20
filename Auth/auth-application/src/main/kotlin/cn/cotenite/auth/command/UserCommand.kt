@@ -1,8 +1,10 @@
 package cn.cotenite.auth.command
 
+import cn.cotenite.auth.commons.enums.RoleCommons
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
 import cn.cotenite.auth.model.domain.dto.dto.UserDetailSaveInput
 import cn.cotenite.auth.model.domain.dto.dto.UserInput
+import cn.cotenite.auth.model.po.dto.UserRoleSaveInput
 import cn.cotenite.auth.query.UserDetailQuery
 import cn.cotenite.auth.repo.UserRepository
 import cn.cotenite.auth.repo.UserRoleRepository
@@ -30,8 +32,8 @@ interface UserCommand{
 @Service
 class UserCommandImpl(
     private val userRepository: UserRepository,
-    private val userRoleRepository:UserRoleRepository,
     private val userDetailQuery: UserDetailQuery,
+    private val userRoleRepository: UserRoleRepository,
     private val passWordEncoder: PasswordEncoder,
 ): UserCommand {
 
@@ -42,13 +44,14 @@ class UserCommandImpl(
         val snowflake=SnowFlakeUtils.generate()
         val input= UserInput(email,snowflake,encode,initUserNum)
         val userId = userRepository.saveUser(input)
+        val userRoleInput=UserRoleSaveInput(UserRoleSaveInput.TargetOf_user(userId), UserRoleSaveInput.TargetOf_role(RoleCommons.USER.roleId))
+        userRoleRepository.saveUserRole4Register(userRoleInput)
         val userDetailInput=UserDetailSaveInput(snowflake,"用户${initUserNum}")
         userDetailQuery.initUserDetail(userDetailInput)
-        userRoleRepository.saveRelation4SaveUser(userId)
     }
 
     override fun handleLogin(id: String, password: String):Long{
-        val user=userRepository.findUserByEmailOrNumber(id)
+        val user=userRepository.findUser4Register(id)
         return user.verify(password)
     }
 

@@ -28,3 +28,8 @@ include("commons")
 include("Auth")
 include("Auth:auth-application")
 findProject(":Auth:auth-application")?.name = "auth-application"
+include("id-generator")
+include("id-generator:id-generator-core")
+findProject(":id-generator:id-generator-core")?.name = "id-generator-core"
+include("id-generator:id-generator-api")
+findProject(":id-generator:id-generator-api")?.name = "id-generator-api"

@@ -31,6 +31,7 @@ interface UserDetail {
 
     val updateTime:LocalTime
 
+    @Column(name = "`delete`")
     @Default("UNDELETE")
     @LogicalDeleted("DELETED")
     val delete: Delete

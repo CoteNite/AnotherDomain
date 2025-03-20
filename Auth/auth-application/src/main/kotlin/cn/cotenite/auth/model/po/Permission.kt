@@ -17,6 +17,10 @@ interface Permission {
 
     val permissionName:String
 
+    @ManyToOne
+    @JoinTable(name = "role_permission")
+    val role:Role?
+
     val createTime: LocalTime
 
     val updateTime: LocalTime

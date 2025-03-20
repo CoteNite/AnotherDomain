@@ -4,6 +4,7 @@ package cn.cotenite.auth.policy
 import cn.cotenite.auth.command.VerifyCommand
 import cn.cotenite.expection.BusinessException
 import cn.hutool.core.util.RandomUtil
+import com.alibaba.nacos.api.config.annotation.NacosValue
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
@@ -24,6 +25,7 @@ class EmailPolicy(
     private val taskExecutor: ThreadPoolTaskExecutor,
     private val mailSender: JavaMailSender
 ) {
+
 
     @Transactional(rollbackFor = [BusinessException::class])
     fun sendMail4Register(email:String) {

@@ -24,10 +24,12 @@
             <option value="$PROJECT_DIR$/Auth/auth-application" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/commons" />
+            <option value="$PROJECT_DIR$/id-generator" />
+            <option value="$PROJECT_DIR$/id-generator/id-generator-api" />
+            <option value="$PROJECT_DIR$/id-generator/id-generator-core" />
           </set>
         </option>
       </GradleProjectSettings>
     </option>
-    <option name="offlineMode" value="true" />
   </component>
 </project>

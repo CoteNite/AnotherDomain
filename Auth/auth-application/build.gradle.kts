@@ -33,6 +33,9 @@ dependencies {
     implementation("cn.dev33:sa-token-redis-jackson:${satokenVersion}")
     implementation("cn.dev33:sa-token-spring-boot3-starter:${satokenVersion}")
     implementation("org.springframework.security:spring-security-crypto:${bcryptVersion}")
+    implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:4.2.0")
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.3.2")
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2023.0.3.2")
 
     runtimeOnly("mysql:mysql-connector-java:${mysqlConnectVersion}")
 

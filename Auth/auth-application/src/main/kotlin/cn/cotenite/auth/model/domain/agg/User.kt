@@ -4,6 +4,7 @@ import cn.cotenite.auth.commons.enums.Delete
 import cn.cotenite.auth.commons.utils.SnowflakeIdGenerator
 import cn.cotenite.auth.model.po.Permission
 import cn.cotenite.auth.model.po.Role
+import cn.cotenite.auth.model.po.UserRole
 import cn.cotenite.expection.BusinessException
 import org.babyfish.jimmer.Immutable
 import org.babyfish.jimmer.sql.*
@@ -32,15 +33,20 @@ interface User{
 
     val userNumber:String
 
-    @ManyToMany
-    @JoinTable(name = "user_role")
-    val roles:List<Role>
+    @OneToMany(mappedBy = "user")
+    val userRoles:List<UserRole>
 
+    @ManyToManyView(
+        prop = "userRoles",
+        deeperProp = "role"
+    )
+    val roles:List<Role>
 
     val createTime:LocalTime
 
     val updateTime:LocalTime
 
+    @Column(name = "`delete`")
     @Default("UNDELETE")
     @LogicalDeleted("DELETED")
     val delete: Delete

@@ -8,8 +8,10 @@ import org.babyfish.jimmer.sql.meta.UserIdGenerator
  * @Description
  * @Date  2025/3/19 06:59
  */
+
 class SnowflakeIdGenerator: UserIdGenerator<Long> {
     override fun generate(entityType: Class<*>?): Long {
         return SnowFlakeUtils.generate()
     }
+
 }

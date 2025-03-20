@@ -12,15 +12,19 @@ import java.time.LocalTime
 interface Role {
 
     @Id
-    val id:Long
+    val id:Int
 
     val roleName:String
 
-    @ManyToMany
-    @JoinTable(name = "role_permission")
+    @OneToMany(mappedBy = "role")
+    val userRoles:List<UserRole>
+
+    @OneToMany(mappedBy = "role")
     val permissions:List<Permission>
 
     val createTime: LocalTime
 
     val updateTime: LocalTime
+
+
 }

@@ -45,7 +45,7 @@ class UserRepository(
         }
     }
 
-    fun findUserByEmailOrNumber(id: String): User {
+    fun findUser4Register(id: String): User {
         try {
             val user = sqlClient
                 .createQuery(User::class) {
@@ -84,9 +84,26 @@ class UserRepository(
         }catch (e: SaveException.NotUnique){
             throw BusinessException("该用户已存在")
         }
-
     }
 
+    fun test2getPermission(): User{
+        val user = sqlClient
+            .createQuery(User::class) {
+                where(
+                    table.id eq 0
+                )
+                select(table.fetchBy {
+                    allScalarFields()
+                    roles {
+                        permissions {
+                            permissionName()
+                        }
+                    }
+                })
+            }
+            .fetchOne()
+        return user
+    }
 
 
 }

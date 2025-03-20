@@ -1,34 +1,32 @@
 server:
   port: 8080
-  servlet:
-    context-path: /api
 
 spring:
-  data:
-    redis:
-      database: 1
-      host: 127.0.0.1
-      port: 6379
-      timeout: 10s
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/another_domain
-    username: root
-    password: ${database.password}
-  mail:
-    host: ${email.host}
-    port: ${email.port}
-    username: ${email.username}
-    password: ${email.password}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          enable: true
-          ssl:
-            enable: true
-          socketFactoryClass: javax.net.ssl.SSLSocketFactory
-      default-encoding: UTF-8
+#  data:
+#    redis:
+#      database: 1
+#      host: 127.0.0.1
+#      port: 6379
+#      timeout: 10s
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/another_domain
+#    username: root
+#    password: ${database.password}
+#  mail:
+#    host: ${email.host}
+#    port: ${email.port}
+#    username: ${email.username}
+#    password: ${email.password}
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          enable: true
+#          ssl:
+#            enable: true
+#          socketFactoryClass: javax.net.ssl.SSLSocketFactory
+#      default-encoding: UTF-8
 jimmer:
   language: kotlin
   show-sql: true

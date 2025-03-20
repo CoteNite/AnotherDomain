@@ -1,4 +1,7 @@
 import cn.cotenite.auth.AuthApplication
+import cn.cotenite.auth.command.UserCommand
+import cn.cotenite.auth.model.domain.agg.User
+import cn.cotenite.auth.model.domain.dto.dto.UserInput
 import cn.cotenite.auth.repo.UserRepository
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
@@ -16,11 +19,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @SpringBootTest(classes = [AuthApplication::class])
 class RedissonTest(
     @Autowired
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    @Autowired
+    private val userCommand: UserCommand
 ){
 
     @Test
     fun setList(){
-
+        println(userRepository.test2getPermission())
     }
 }

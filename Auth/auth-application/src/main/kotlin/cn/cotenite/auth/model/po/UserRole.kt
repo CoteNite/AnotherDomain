@@ -1,14 +1,16 @@
 package cn.cotenite.auth.model.po
 
+import cn.cotenite.auth.commons.enums.Blacked
 import cn.cotenite.auth.commons.utils.SnowflakeIdGenerator
+import cn.cotenite.auth.model.domain.agg.User
 import org.babyfish.jimmer.sql.*
 import java.time.LocalTime
 
 /**
  * @Author  RichardYoung
- * @Description
- * @Date  2025/3/20 09:34
- */
+ * @Description  
+ * @Date  2025/3/20 14:47
+*/
 @Entity
 interface UserRole {
 
@@ -16,12 +18,15 @@ interface UserRole {
     @GeneratedValue(generatorType = SnowflakeIdGenerator::class)
     val id:Long
 
-    val userId:Long
+    @ManyToOne
+    val user: User
 
-    val roleId:Int
+    @ManyToOne
+    val role:Role
 
-    val createTime:LocalTime
+    val black:Blacked
 
-    val updateTime:LocalTime
+    val createTime: LocalTime
 
+    val updateTime: LocalTime
 }

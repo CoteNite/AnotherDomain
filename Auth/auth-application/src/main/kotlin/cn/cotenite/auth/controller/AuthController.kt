@@ -7,9 +7,6 @@ import cn.cotenite.auth.model.dto.rep.RegisterRepDTO
 import cn.cotenite.auth.model.dto.req.LoginReqDTO
 import cn.cotenite.auth.service.AuthService
 import cn.cotenite.response.Response
-import cn.cotenite.validator.Email
-import jakarta.validation.Valid
-import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Pattern
 import org.springframework.validation.annotation.Validated
 
