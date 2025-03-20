@@ -1,6 +1,7 @@
 package cn.cotenite.auth.command
 
 import cn.cotenite.auth.commons.enums.RoleCommons
+import cn.cotenite.auth.commons.utils.SnowflakeIdGenerator
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
 import cn.cotenite.auth.model.domain.dto.dto.UserDetailSaveInput
 import cn.cotenite.auth.model.domain.dto.dto.UserInput
@@ -8,7 +9,6 @@ import cn.cotenite.auth.model.po.dto.UserRoleSaveInput
 import cn.cotenite.auth.query.UserDetailQuery
 import cn.cotenite.auth.repo.UserRepository
 import cn.cotenite.auth.repo.UserRoleRepository
-import cn.cotenite.utils.SnowFlakeUtils
 import cn.hutool.core.util.RandomUtil
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -35,13 +35,14 @@ class UserCommandImpl(
     private val userDetailQuery: UserDetailQuery,
     private val userRoleRepository: UserRoleRepository,
     private val passWordEncoder: PasswordEncoder,
+    private val snowflakeIdGenerator: SnowflakeIdGenerator
 ): UserCommand {
 
     @Transactional(rollbackFor = [Exception::class])
     override fun handleRegister(email: String, password: String) {
         val initUserNum = RandomUtil.randomString(9)
         val encode = passWordEncoder.encode(password)
-        val snowflake=SnowFlakeUtils.generate()
+        val snowflake=snowflakeIdGenerator.getId()
         val input= UserInput(email,snowflake,encode,initUserNum)
         val userId = userRepository.saveUser(input)
         val userRoleInput=UserRoleSaveInput(UserRoleSaveInput.TargetOf_user(userId), UserRoleSaveInput.TargetOf_role(RoleCommons.USER.roleId))

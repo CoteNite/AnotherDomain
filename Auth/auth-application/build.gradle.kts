@@ -19,12 +19,13 @@ val satokenVersion = "1.40.0"
 
 
 dependencies {
+    //外部依赖
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-
+    implementation("org.springframework:spring-context-support:6.2.3")
     implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}")
     implementation("org.redisson:redisson-spring-boot-starter:${redissonVersion}")
@@ -36,12 +37,15 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:4.2.0")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.3.2")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2023.0.3.2")
+    implementation("org.apache.dubbo:dubbo:3.2.0")
+    implementation("org.apache.dubbo:dubbo-spring-boot-starter:3.2.0")
+    //项目间依赖管理
+    implementation(project(":commons"))
+    implementation(project(":id-generator:id-generator-api"))
 
     runtimeOnly("mysql:mysql-connector-java:${mysqlConnectVersion}")
 
     ksp("org.babyfish.jimmer:jimmer-ksp:${jimmerVersion}")
-
-    implementation(project(":commons"))
 
     testImplementation(kotlin("test"))
     testImplementation("org.springframework.boot:spring-boot-starter-test")

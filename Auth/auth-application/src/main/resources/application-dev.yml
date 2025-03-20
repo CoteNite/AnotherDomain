@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 
 spring:
 #  data:
@@ -36,3 +36,13 @@ sa-token:
   token-name: Authorization
   timeout: 604800
   token-style: simple-uuid
+dubbo:
+  application:
+    name: auth
+    version: 1.0
+    qos-port: 22223
+  registry:
+    address: nacos://127.0.0.1:8848
+  protocol:
+    name: dubbo
+    port: -1

@@ -1,15 +1,11 @@
 import cn.cotenite.auth.AuthApplication
 import cn.cotenite.auth.command.UserCommand
-import cn.cotenite.auth.model.domain.agg.User
+import cn.cotenite.auth.commons.utils.SnowflakeIdGenerator
 import cn.cotenite.auth.model.domain.dto.dto.UserInput
 import cn.cotenite.auth.repo.UserRepository
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-import org.redisson.api.RedissonClient
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.security.crypto.bcrypt.BCrypt
-import org.springframework.test.context.junit.jupiter.SpringExtension
 
 /**
  * @Author  RichardYoung
@@ -21,11 +17,15 @@ class RedissonTest(
     @Autowired
     private val userRepository: UserRepository,
     @Autowired
-    private val userCommand: UserCommand
+    private val userCommand: UserCommand,
+    @Autowired
+    private val snowflakeIdGenerator: SnowflakeIdGenerator
 ){
 
     @Test
     fun setList(){
-        println(userRepository.test2getPermission())
+
+        val userInput = UserInput("123ddfs123", 21312312312, "3234", "3213123")
+        println(userRepository.saveUser(userInput))
     }
 }

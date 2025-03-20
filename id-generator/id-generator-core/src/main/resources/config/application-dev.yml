@@ -1,2 +1,15 @@
 server:
-  port: 8081
+  port: 8082
+dubbo:
+  application:
+    name: id-generator
+    version: 1.0
+    qos-port: 22222
+  registry:
+    id: nacos-registry
+    address: nacos://127.0.0.1:8848
+  protocol:
+    name: dubbo
+    port: -1
+  scan:
+    base-packages: cn.cotenite.leaf
