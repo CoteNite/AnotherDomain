@@ -1,0 +1,8 @@
+export cn.cotenite.auth.model.po.UserRole
+    -> package cn.cotenite.auth.model.po.dto
+
+Save4UserUserRoleInput {
+    userId
+    roleId
+}
+
