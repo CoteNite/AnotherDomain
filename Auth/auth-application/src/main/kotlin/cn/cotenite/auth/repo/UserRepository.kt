@@ -18,6 +18,7 @@ import org.babyfish.jimmer.sql.kt.ast.expression.eq
 import org.babyfish.jimmer.sql.kt.ast.expression.or
 import org.redisson.api.RedissonClient
 import org.springframework.stereotype.Repository
+import java.time.Duration
 import java.util.HashMap
 
 /**
@@ -70,6 +71,7 @@ class UserRepository(
                 }
             }
             redisClient.getBucket<HashMap<String,Int>>(RedisKeyCreator.userPermissionHashKey(user.id)).set(permissionHash)
+            redisClient.getBucket<HashMap<String,Int>>(RedisKeyCreator.userPermissionHashKey(user.id)).expire(Duration.ofDays(7))
             return user
         }catch (e: EmptyResultException){
             throw BusinessException("该用户不存在")
@@ -84,25 +86,6 @@ class UserRepository(
         }catch (e: SaveException.NotUnique){
             throw BusinessException("该用户已存在")
         }
-    }
-
-    fun test2getPermission(): User{
-        val user = sqlClient
-            .createQuery(User::class) {
-                where(
-                    table.id eq 0
-                )
-                select(table.fetchBy {
-                    allScalarFields()
-                    roles {
-                        permissions {
-                            permissionName()
-                        }
-                    }
-                })
-            }
-            .fetchOne()
-        return user
     }
 
 

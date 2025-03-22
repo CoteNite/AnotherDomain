@@ -24,14 +24,14 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException::class)
     @ResponseBody
-    fun handleBusinessException(request: HttpServletRequest,e: BusinessException): Response {
+    fun handleBusinessException(e: BusinessException,request: HttpServletRequest): Response {
         printLog(request.requestURI,e.message)
         return Response.fail(e.message)
     }
 
     @ExceptionHandler(MethodArgumentNotValidException::class)
     @ResponseBody
-    fun handleMethodArgumentNotValidException(request: HttpServletRequest, e: MethodArgumentNotValidException): Response{
+    fun handleMethodArgumentNotValidException( e: MethodArgumentNotValidException,request: HttpServletRequest): Response{
         val bindingResult = e.bindingResult
         val sb = StringBuilder()
         Optional.ofNullable(bindingResult.fieldErrors).ifPresent { errors ->
@@ -45,26 +45,26 @@ class GlobalExceptionHandler {
             }
         }
         val errorMessage = sb.toString()
-        printLog(request.requestURI,e.message)
+        printLog(request.requestURI,e.message?:"failure")
         return Response.fail(errorMessage)
     }
 
     @ExceptionHandler(SaTokenException::class)
     @ResponseBody
-    fun handleSatokenException(request: HttpServletRequest,e: BusinessException): Response {
-        printLog(request.requestURI,e.message)
+    fun handleSatokenException(e: SaTokenException,request: HttpServletRequest): Response {
+        printLog(request.requestURI,e.message?:"failure")
         return Response.fail("登录/身份错误，请尝试退出并重新登录")
     }
 
     @ExceptionHandler(Exception::class)
     @ResponseBody
-    fun handleOtherException(request: HttpServletRequest,e: BusinessException): Response {
-
+    fun handleOtherException(e: Exception,request: HttpServletRequest,): Response {
+        printLog(request.requestURI,e.message?:"failure")
         return Response.fail("系统出现未知错误，请联系网站管理员进行修复")
     }
 
     private fun printLog(url:String,message:String){
-        log.warn("{} request error, errorMessage: {}", url, message)
+        log.error("{} request error, errorMessage: {}", url, message)
     }
 
 }

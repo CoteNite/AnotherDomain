@@ -1,0 +1,22 @@
+spring:
+  config:
+    import: nacos:gateway-dev.yaml
+  application:
+    name: gateway
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      config:
+        server-addr: localhost:8848
+        prefix: ${spring.application.name}
+        group: DEFAULT_GROUP
+        namespace: another-domain
+        file-extension: yaml
+        refresh-enabled: true
+      discovery:
+        enabled: true
+        group: DEFAULT_GROUP
+        namespace: another-domain
+        server-addr: localhost:8848

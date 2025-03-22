@@ -1,4 +1,4 @@
-package cn.cotenite.auth
+package cn.cotenite.gateway
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -6,11 +6,11 @@ import org.springframework.boot.runApplication
 /**
  * @Author  RichardYoung
  * @Description
- * @Date  2025/3/15 03:35
+ * @Date  2025/3/21 05:00
  */
 @SpringBootApplication
-class AuthApplication
+class GatewayApplication
 
 fun main(args: Array<String>) {
-    runApplication<AuthApplication>(*args)
+    runApplication<GatewayApplication>(*args)
 }
