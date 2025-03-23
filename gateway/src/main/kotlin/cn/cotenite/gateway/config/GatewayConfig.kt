@@ -8,8 +8,10 @@ import com.alibaba.csp.sentinel.adapter.gateway.sc.callback.GatewayCallbackManag
 import com.alibaba.csp.sentinel.adapter.gateway.sc.exception.SentinelGatewayBlockExceptionHandler
 import jakarta.annotation.PostConstruct
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.web.servlet.ServletComponentScan
 import org.springframework.cloud.gateway.filter.GlobalFilter
 import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.ComponentScan
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.EnableAspectJAutoProxy
 import org.springframework.core.Ordered
@@ -28,11 +30,13 @@ import org.springframework.web.reactive.result.view.ViewResolver
  * @Date  2025/3/22 09:24
  */
 @Configuration
+@ComponentScan(value = ["cn.cotenite.*"])
+@ServletComponentScan(basePackages = ["cn.cotenite.*"])
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 class GatewayConfig(
     val viewResolvers:List<ViewResolver>,
     val serverCodecConfigurer: ServerCodecConfigurer,
-    @Value("\${spring.cloud.gateway.discovery.locator.route-id-prefix")
+    @Value("\${spring.cloud.gateway.discovery.locator.route-id-prefix}")
     var routeIdPrefix:String?
 ){
 
