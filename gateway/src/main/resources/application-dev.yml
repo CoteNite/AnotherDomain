@@ -14,10 +14,17 @@ spring:
   main:
     web-application-type: reactive
   cloud:
+    sentinel:
+      transport:
+        port: 8702
+        dashboard: localhost:8888
+      web-context-unify: false
+      eager: true
     gateway:
       discovery:
         locator:
           enabled: true
+          route-id-prefix: gateway-
       globalcors:
         cors-configurations:
           '[/**]':

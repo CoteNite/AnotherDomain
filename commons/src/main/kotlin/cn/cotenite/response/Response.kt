@@ -28,5 +28,9 @@ data class Response(
         fun fail(err: BusinessException): Response {
             return Response(400,err.message,null)
         }
+
+        fun fail(code: Int, msg: String): Response {
+            return Response(code,msg,null)
+        }
     }
 }

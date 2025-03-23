@@ -28,6 +28,7 @@
             <option value="$PROJECT_DIR$/id-generator" />
             <option value="$PROJECT_DIR$/id-generator/id-generator-api" />
             <option value="$PROJECT_DIR$/id-generator/id-generator-core" />
+            <option value="$PROJECT_DIR$/ratelimter" />
           </set>
         </option>
       </GradleProjectSettings>

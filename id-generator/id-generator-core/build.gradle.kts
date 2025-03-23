@@ -30,8 +30,8 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:4.2.0")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.3.2")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2023.0.3.2")
-    implementation("org.apache.dubbo:dubbo:3.2.0")
-    implementation("org.apache.dubbo:dubbo-spring-boot-starter:3.2.0")
+    implementation("org.apache.dubbo:dubbo:3.3.4")
+    implementation("org.apache.dubbo:dubbo-spring-boot-starter:3.3.4")
     implementation("org.apache.zookeeper:zookeeper:$zookeeperVersion")
     implementation("org.springframework:spring-context-support:6.2.3")
     implementation("org.apache.curator:curator-recipes:$curatorRecipesVersion") {

@@ -20,7 +20,7 @@ AnotherDomain——另一个领域，由互联网为您提供的专属于您的�
 
 框架：SpringBoot
 
-安全框架：saToken
+安全框架：SaToken
 
 数据库：MySQL ORM：Jimmer
 
@@ -29,6 +29,8 @@ AnotherDomain——另一个领域，由互联网为您提供的专属于您的�
 注册中心/配置中心：Nacos
 
 Rpc框架：Dubbo
+
+限流：Sentinel
 
 **未完待续......**
 

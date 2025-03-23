@@ -1,7 +1,7 @@
 server:
   port: 8081
 
-spring:
+#spring:
 #  data:
 #    redis:
 #      database: 1
@@ -46,3 +46,18 @@ dubbo:
   protocol:
     name: dubbo
     port: -1
+rate:
+  limit:
+    local:
+      enabled: true
+      default:
+        permitsPerSecond: 1
+        timeout: 0
+      concurrent:
+        enabled: true
+        default:
+          corePoolSize: 1
+          maximumPoolSize: 1
+          keepAliveTime: 30
+          queueCapacity: 1
+          timeout: 1

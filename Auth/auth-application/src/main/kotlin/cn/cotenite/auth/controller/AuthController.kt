@@ -6,7 +6,10 @@ import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
 import cn.cotenite.auth.model.dto.rep.RegisterRepDTO
 import cn.cotenite.auth.model.dto.req.LoginReqDTO
 import cn.cotenite.auth.service.AuthService
+import cn.cotenite.ratelimter.annotation.AnotherDomainRateLimiter
+import cn.cotenite.ratelimter.annotation.ConcurrentRateLimiter
 import cn.cotenite.response.Response
+import com.alibaba.csp.sentinel.annotation.SentinelResource
 import jakarta.validation.constraints.Pattern
 import org.springframework.validation.annotation.Validated
 
@@ -32,20 +35,23 @@ class AuthController(
 ){
 
     @GetMapping("/loginCode")
+    @ConcurrentRateLimiter(name = "bhRateLimiter", queueCapacity = 0)
     fun loginCode(): Response {
         val captchaReqDTO = verifyCommand.handleLoginCode()
         return Response.success(captchaReqDTO)
     }
 
     @GetMapping("/registerCode")
+    @AnotherDomainRateLimiter(permitsPerSecond = 10000, timeout = 0)
     fun registerCode(@RequestParam
-                     @Pattern(regexp = "\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}", message = "邮箱格式不正确") email: String): Response {
+                     @Pattern(regexp = "\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}", message = "邮箱格式不正确")
+                     email: String): Response {
         authService.sendEmail4Register(email)
         return Response.success()
     }
 
 
-    @GetMapping("resetPasswordCode")
+    @GetMapping("/resetPasswordCode")
     fun resetPasswordCode(@RequestParam @Pattern(regexp = "\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}", message = "邮箱格式不正确")
                           email:String): Response {
         authService.sendEmail4RestPassword(email)
@@ -71,8 +77,6 @@ class AuthController(
         authService.resetPassword(restPasswordInput)
         return Response.success()
     }
-
-
 
 
 }

@@ -6,6 +6,31 @@ spring:
   profiles:
     active: dev
   cloud:
+    sentinel:
+      filter:
+        enabled: true
+      transport:
+        port: 9991
+        dashboard: localhost:8888
+      datasource:
+        ds1:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            namespace: sentinel-config
+            data-id: DEFAULT-SENTINEL-FLOW-CONFIGURATION
+            group-id: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+        ds2:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            namespace: sentinel-config
+            data-id: DEFAULT-SENTINEL-DEGRADE-CONFIGURATION
+            group-id: DEFAULT_GROUP
+            data-type: json
+            rule-type: degrade
+      eager: true
+      http-method-specify: true
     nacos:
       server-addr: localhost:8848
       config:

@@ -34,3 +34,4 @@ findProject(":id-generator:id-generator-core")?.name = "id-generator-core"
 include("id-generator:id-generator-api")
 findProject(":id-generator:id-generator-api")?.name = "id-generator-api"
 include("gateway")
+include("ratelimter")
