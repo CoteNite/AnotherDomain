@@ -1,22 +1,17 @@
 package cn.cotenite.auth.controller
 
+import cn.cotenite.asp.Slf4j
+import cn.cotenite.asp.Slf4j.Companion.log
 import cn.cotenite.auth.command.VerifyCommand
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
-
 import cn.cotenite.auth.model.dto.rep.RegisterRepDTO
 import cn.cotenite.auth.model.dto.req.LoginReqDTO
 import cn.cotenite.auth.service.AuthService
 import cn.cotenite.response.Response
-import com.alibaba.csp.sentinel.annotation.SentinelResource
+import com.alibaba.nacos.api.model.v2.ErrorCode
 import jakarta.validation.constraints.Pattern
 import org.springframework.validation.annotation.Validated
-
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 
 /**
@@ -24,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController
  * @Description
  * @Date  2025/3/15 06:09
  */
+@Slf4j
 @Validated
 @RestController
 @RequestMapping("/auth")
@@ -73,6 +69,7 @@ class AuthController(
         authService.resetPassword(restPasswordInput)
         return Response.success()
     }
+
 
 
 }

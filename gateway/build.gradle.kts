@@ -25,9 +25,10 @@ dependencies {
     implementation("com.alibaba.csp:sentinel-datasource-nacos:1.8.8")
     implementation("com.alibaba.csp:sentinel-spring-cloud-gateway-adapter:1.8.8")
     implementation("org.aspectj:aspectjweaver:1.9.20.1")
+    implementation("com.google.guava:guava:33.4.0-jre")
 
+    implementation(project(":commons"))
 
-    testImplementation(kotlin("test"))
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

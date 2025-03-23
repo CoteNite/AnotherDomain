@@ -28,6 +28,8 @@ AnotherDomain——另一个领域，由互联网为您提供的专属于您的�
 
 注册中心/配置中心：Nacos
 
+网关：Gateway
+
 Rpc框架：Dubbo
 
 限流：Sentinel

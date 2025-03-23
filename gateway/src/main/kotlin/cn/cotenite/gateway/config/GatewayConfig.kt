@@ -1,5 +1,10 @@
 package cn.cotenite.gateway.config
 
+import com.alibaba.csp.sentinel.adapter.gateway.common.SentinelGatewayConstants
+import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiDefinition
+import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiPathPredicateItem
+import com.alibaba.csp.sentinel.adapter.gateway.common.api.ApiPredicateItem
+import com.alibaba.csp.sentinel.adapter.gateway.common.api.GatewayApiDefinitionManager
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayFlowRule
 import com.alibaba.csp.sentinel.adapter.gateway.common.rule.GatewayRuleManager
 import com.alibaba.csp.sentinel.adapter.gateway.sc.SentinelGatewayFilter
@@ -50,12 +55,13 @@ class GatewayConfig(
     fun init(){
         this.initGatewayRules()
         this.initBlockHandlers()
+        this.initCustomizedApis()
     }
 
     private fun initGatewayRules(){
         val rules= HashSet<GatewayFlowRule>()
         rules.add(this.getGatewayFlowRule(this.getResource("auth")))
-        //TODO
+        //TODO 添加其余服务进入规则
         GatewayRuleManager.loadRules(rules)
     }
 
@@ -75,6 +81,13 @@ class GatewayConfig(
         return routeIdPrefix+targetServiceName
     }
 
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
+    fun sentinelGatewayBlockExceptionHandler(): SentinelGatewayBlockExceptionHandler {
+        return SentinelGatewayBlockExceptionHandler(viewResolvers, serverCodecConfigurer)
+    }
+
+
 
     private fun initBlockHandlers() {
         val blockRequestHandler =BlockRequestHandler{ exchange, throwable ->
@@ -91,10 +104,26 @@ class GatewayConfig(
         GatewayCallbackManager.setBlockHandler(blockRequestHandler)
     }
 
-    @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    fun sentinelGatewayBlockExceptionHandler(): SentinelGatewayBlockExceptionHandler {
-        return SentinelGatewayBlockExceptionHandler(viewResolvers, serverCodecConfigurer)
+    private fun initCustomizedApis() {
+        val definitions = mutableSetOf<ApiDefinition>().apply {
+//            add(ApiDefinition("user_api1").apply {
+//                predicateItems = mutableSetOf<ApiPredicateItem>().apply {
+//                    add(ApiPathPredicateItem().apply {
+//                        pattern = "/auth/auth/api1/**"
+//                        matchStrategy = SentinelGatewayConstants.URL_MATCH_STRATEGY_PREFIX
+//                    })
+//                }
+//            })
+//            add(ApiDefinition("user_api2").apply {
+//                predicateItems = mutableSetOf<ApiPredicateItem>().apply {
+//                    add(ApiPathPredicateItem().apply {
+//                        pattern = "/auth/auth/api2/demo1"
+//                    })
+//                }
+//            })
+            //TODO 添加其余服务进入规则,产靠案例如上
+        }
+        GatewayApiDefinitionManager.loadApiDefinitions(definitions)
     }
 
 

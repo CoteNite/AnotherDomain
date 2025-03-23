@@ -17,10 +17,10 @@ val jimmerVersion = "0.9.66"
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation("org.springframework.boot:spring-boot-starter:3.4.3")
     implementation("io.github.microutils:kotlin-logging-jvm:${kotlinLoginVersion}")
     implementation("cn.hutool:hutool-all:${hutoolVersion}")
     implementation("javax.validation:validation-api:2.0.1.Final")
-    implementation("org.babyfish.jimmer:jimmer-spring-boot-starter:${jimmerVersion}")
 
     ksp("org.babyfish.jimmer:jimmer-ksp:${jimmerVersion}")
 }

@@ -37,7 +37,9 @@ class RateLimiterInterceptor(
     private var environment: Environment
 ): EnvironmentAware {
 
-    private val BH_RATE_LIMITER_MAP = ConcurrentHashMap<String, BHRateLimiter>()
+    companion object{
+        private val BH_RATE_LIMITER_MAP = ConcurrentHashMap<String, BHRateLimiter>()
+    }
 
     @Pointcut("@within(cn.cotenite.ratelimter.annotation.AnotherDomainRateLimiter)")
     fun classLevelAnnotation() {}

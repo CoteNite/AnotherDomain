@@ -1,5 +1,6 @@
 package cn.cotenite.response
 
+import cn.cotenite.commons.Errors
 import cn.cotenite.expection.BusinessException
 
 /**
@@ -32,5 +33,11 @@ data class Response(
         fun fail(code: Int, msg: String): Response {
             return Response(code,msg,null)
         }
+
+        fun fail(retryLater: Errors): Response {
+            return Response(200,retryLater.message,null)
+        }
+
+
     }
 }

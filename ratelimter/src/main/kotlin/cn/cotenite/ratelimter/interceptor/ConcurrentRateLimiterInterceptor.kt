@@ -51,7 +51,10 @@ class ConcurrentRateLimiterInterceptor(
     private var environment: Environment
 ): EnvironmentAware, DisposableBean {
 
-    private val BH_CONCURRENT_RATE_LIMITER_MAP = ConcurrentHashMap<String, BHConcurrentRateLimiter>()
+    companion object{
+        private val BH_CONCURRENT_RATE_LIMITER_MAP = ConcurrentHashMap<String, BHConcurrentRateLimiter>()
+    }
+
 
     @Pointcut("@annotation(cn.cotenite.ratelimter.annotation.ConcurrentRateLimiter)")
     fun methodPointCut() {
