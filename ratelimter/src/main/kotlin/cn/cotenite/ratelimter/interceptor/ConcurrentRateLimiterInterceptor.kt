@@ -49,25 +49,45 @@ class ConcurrentRateLimiterInterceptor(
     val defaultTimeOut:Long,
 
     private var environment: Environment
-): EnvironmentAware, DisposableBean{
+): EnvironmentAware, DisposableBean {
 
-    private val  BH_CONCURRENT_RATE_LIMITER_MAP = ConcurrentHashMap<String, BHConcurrentRateLimiter> ()
+    private val BH_CONCURRENT_RATE_LIMITER_MAP = ConcurrentHashMap<String, BHConcurrentRateLimiter>()
 
-    @Pointcut("@annotation(concurrentRateLimiter)")
-    fun pointCut( concurrentRateLimiter: ConcurrentRateLimiter){
-
+    @Pointcut("@annotation(cn.cotenite.ratelimter.annotation.ConcurrentRateLimiter)")
+    fun methodPointCut() {
     }
 
-    @Around(value = "pointCut(concurrentRateLimiter)")
+    @Pointcut("@within(cn.cotenite.ratelimter.annotation.ConcurrentRateLimiter)")
+    fun classPointCut() {
+    }
+
+    @Pointcut("methodPointCut() || classPointCut()")
+    fun pointCut() {
+    }
+
+    @Around("pointCut()")
     @Throws(Throwable::class)
-    fun around(pjp: ProceedingJoinPoint, concurrentRateLimiter: ConcurrentRateLimiter): Any {
+    fun around(pjp: ProceedingJoinPoint): Any {
         val signature = pjp.signature as MethodSignature
+        val method = signature.method
         val className = pjp.target.javaClass.simpleName
         val methodName = signature.name
+
+        var concurrentRateLimiter = method.getAnnotation(ConcurrentRateLimiter::class.java)
+
+        if (concurrentRateLimiter == null) {
+            concurrentRateLimiter = pjp.target.javaClass.getAnnotation(ConcurrentRateLimiter::class.java)
+
+            if (concurrentRateLimiter == null) {
+                return pjp.proceed()
+            }
+        }
+
         var rateLimitName = environment.resolvePlaceholders(concurrentRateLimiter.name)
         if (StrUtil.isEmpty(rateLimitName) || rateLimitName.contains("\${")) {
             rateLimitName = "$className-$methodName"
         }
+
         val rateLimiter: BHConcurrentRateLimiter = this.getRateLimiter(rateLimitName, concurrentRateLimiter)
         val args = pjp.args
 
@@ -81,7 +101,6 @@ class ConcurrentRateLimiterInterceptor(
                 throw RuntimeException(e)
             }
         }
-
     }
 
     private fun getRateLimiter(rateLimitName:String, concurrentRateLimiter:ConcurrentRateLimiter): BHConcurrentRateLimiter{
@@ -154,6 +173,4 @@ class ConcurrentRateLimiterInterceptor(
     override fun destroy() {
         log.info("destroy|关闭线程池")
     }
-
-
 }
