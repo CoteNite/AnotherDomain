@@ -32,10 +32,10 @@ jimmer:
   show-sql: true
   dialect: org.babyfish.jimmer.sql.dialect.MySqlDialect
   pretty-sql: true
-sa-token:
-  token-name: Authorization
-  timeout: 604800
-  token-style: simple-uuid
+#sa-token:
+#  token-name: Authorization
+#  timeout: 604800
+#  token-style: simple-uuid
 dubbo:
   application:
     name: auth

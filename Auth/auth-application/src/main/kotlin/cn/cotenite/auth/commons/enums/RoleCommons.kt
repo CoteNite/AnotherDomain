@@ -9,8 +9,8 @@ enum class RoleCommons(
     val roleId:Int
 ){
 
-    USER(0),
-    ADMINISTRATOR(1)
+    USER(1),
+    ADMINISTRATOR(2)
     ;
 
 }

@@ -46,7 +46,7 @@ class UserRepository(
         }
     }
 
-    fun findUser4Register(id: String): User {
+    fun login(id: String): User {
         try {
             val user = sqlClient
                 .createQuery(User::class) {
@@ -70,8 +70,11 @@ class UserRepository(
                     permissionHash[permission.permissionName] = YesOrNo.YES.id
                 }
             }
-            redisClient.getBucket<HashMap<String,Int>>(RedisKeyCreator.userPermissionHashKey(user.id)).set(permissionHash)
-            redisClient.getBucket<HashMap<String,Int>>(RedisKeyCreator.userPermissionHashKey(user.id)).expire(Duration.ofDays(7))
+            val map = redisClient.getMap<String, Int>(RedisKeyCreator.userPermissionHashKey(user.id))
+            for ((permissionName,yesOrNo) in permissionHash){
+                map[permissionName] = yesOrNo
+            }
+                map.expire(Duration.ofDays(7))
             return user
         }catch (e: EmptyResultException){
             throw BusinessException("该用户不存在")

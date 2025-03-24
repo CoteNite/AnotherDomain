@@ -1,5 +1,6 @@
 spring:
   config:
     name: gateway
+    import:
   profiles:
     active: dev
