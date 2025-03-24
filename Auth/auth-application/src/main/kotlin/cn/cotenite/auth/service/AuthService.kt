@@ -1,5 +1,6 @@
 package cn.cotenite.auth.service
 
+import cn.cotenite.asp.Slf4j
 import cn.cotenite.auth.command.UserCommand
 import cn.cotenite.auth.command.VerifyCommand
 import cn.cotenite.auth.policy.EmailPolicy
@@ -27,12 +28,15 @@ interface AuthService {
 
 }
 
+@Slf4j
 @Service
 class AuthServiceImpl(
     private val verifyCommand: VerifyCommand,
     private val userCommand: UserCommand,
     private val sendUtils: EmailPolicy
 ):AuthService{
+
+
 
     @Transactional(rollbackFor = [Exception::class])
     override fun sendEmail4Register(email: String) {

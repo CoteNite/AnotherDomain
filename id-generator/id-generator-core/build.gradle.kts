@@ -39,7 +39,13 @@ dependencies {
         exclude(group = "org.apache.zookeeper")
     }
 
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel:2023.0.3.2")
+    implementation("com.alibaba.csp:sentinel-datasource-nacos:1.8.8")
+    implementation("com.alibaba.csp:sentinel-web-servlet:1.8.8")
+    implementation("com.alibaba.cloud:spring-cloud-alibaba-sentinel-gateway:2023.0.3.2")
+
     implementation(project(":id-generator:id-generator-api"))
+    implementation(project(":commons"))
 
 
     testImplementation(kotlin("test"))

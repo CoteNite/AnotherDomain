@@ -5,8 +5,10 @@ import cn.cotenite.leaf.common.Result;
 import cn.cotenite.leaf.common.Status;
 import cn.cotenite.leaf.exception.LeafServerException;
 import cn.cotenite.leaf.exception.NoKeyException;
+import cn.cotenite.leaf.fallback.FallbackService;
 import cn.cotenite.leaf.service.SegmentService;
 import cn.cotenite.leaf.service.SnowflakeService;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
 import jakarta.annotation.Resource;
 import org.apache.dubbo.config.annotation.DubboService;
 import org.slf4j.Logger;
@@ -34,6 +36,7 @@ public class LeafController implements IdGeneratorService {
 
     @Override
     @RequestMapping(value = "/segment/get/{key}")
+    @SentinelResource(blockHandlerClass = FallbackService.class, fallback = "getSnowflakeFallback")
     public String getSegmentId(@PathVariable("key") String key) {
         return get(key, segmentService.getId(key));
     }
