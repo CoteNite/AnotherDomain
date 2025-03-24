@@ -1,6 +1,6 @@
 package cn.cotenite.gateway.factory
 
-import cn.cotenite.commons.Errors
+import cn.cotenite.enums.Errors
 import cn.cotenite.response.Response
 import com.alibaba.fastjson.JSON
 import com.google.common.cache.CacheBuilder

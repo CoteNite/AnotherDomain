@@ -1,6 +1,6 @@
 package cn.cotenite.expection
 
-import cn.cotenite.commons.Errors
+import cn.cotenite.enums.Errors
 
 /**
  * @Author  RichardYoung

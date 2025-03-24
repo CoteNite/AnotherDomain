@@ -30,6 +30,8 @@ dependencies {
     implementation("com.google.guava:guava:33.4.0-jre")
     implementation("org.redisson:redisson-spring-boot-starter:${redissonVersion}")
 
+    implementation("cn.hutool:hutool-all:5.8.20")
+
     implementation("cn.dev33:sa-token-redis-jackson:${satokenVersion}")
     implementation("cn.dev33:sa-token-reactor-spring-boot3-starter:${satokenVersion}")
     implementation("org.apache.commons:commons-pool2:2.12.0")

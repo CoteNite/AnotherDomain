@@ -1,8 +1,7 @@
 package cn.cotenite.ratelimter.policy
 
-import cn.cotenite.commons.Errors
+import cn.cotenite.enums.Errors
 import cn.cotenite.expection.BusinessException
-import cn.hutool.core.thread.RejectPolicy
 import java.util.concurrent.RejectedExecutionHandler
 import java.util.concurrent.ThreadPoolExecutor
 

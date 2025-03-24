@@ -1,4 +1,4 @@
-package cn.cotenite.commons
+package cn.cotenite.enums
 
 /**
  * @Author  RichardYoung

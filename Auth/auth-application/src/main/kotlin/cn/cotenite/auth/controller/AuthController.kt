@@ -7,7 +7,9 @@ import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
 import cn.cotenite.auth.model.dto.rep.RegisterRepDTO
 import cn.cotenite.auth.model.dto.req.LoginReqDTO
 import cn.cotenite.auth.service.AuthService
+import cn.cotenite.filter.LoginUserContextHolder
 import cn.cotenite.response.Response
+import cn.dev33.satoken.stp.StpUtil
 import com.alibaba.nacos.api.model.v2.ErrorCode
 import jakarta.validation.constraints.Pattern
 import org.springframework.validation.annotation.Validated
@@ -72,6 +74,8 @@ class AuthController(
 
     @GetMapping("/logout")
     fun logout(): Response {
+        val userId = LoginUserContextHolder.getUserId()
+        StpUtil.logout(userId)
         return Response.success()
     }
 

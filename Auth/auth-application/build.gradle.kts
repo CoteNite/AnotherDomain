@@ -37,6 +37,9 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:4.2.0")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.3.2")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2023.0.3.2")
+
+    implementation("com.alibaba:transmittable-thread-local:2.14.5")
+
     implementation("org.apache.dubbo:dubbo:3.3.4")
     implementation("org.apache.dubbo:dubbo-spring-boot-starter:3.3.4")
 

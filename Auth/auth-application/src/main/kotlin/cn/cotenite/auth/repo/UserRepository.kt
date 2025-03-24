@@ -7,7 +7,7 @@ import cn.cotenite.auth.model.domain.agg.*
 
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
 import cn.cotenite.auth.model.domain.dto.dto.UserInput
-import cn.cotenite.commons.YesOrNo
+import cn.cotenite.enums.YesOrNo
 
 import cn.cotenite.expection.BusinessException
 import org.babyfish.jimmer.sql.ast.mutation.SaveMode

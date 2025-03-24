@@ -1,13 +1,14 @@
 package cn.cotenite.gateway.config
 
-import cn.cotenite.response.Response
+import cn.dev33.satoken.exception.NotLoginException
+import cn.dev33.satoken.exception.NotPermissionException
+import cn.dev33.satoken.exception.NotRoleException
 import cn.dev33.satoken.reactor.filter.SaReactorFilter
 import cn.dev33.satoken.router.SaRouter
-import cn.dev33.satoken.router.SaRouterStaff
 import cn.dev33.satoken.stp.StpUtil
-import cn.dev33.satoken.util.SaResult
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+
 
 /**
  * @Author  RichardYoung
@@ -22,7 +23,6 @@ class SatokenConfig {
         return SaReactorFilter()
             .addInclude("/**")
             .setAuth {
-
                 SaRouter.match("/**")
                     .notMatch("/auth/auth/login",
                         "/auth/auth/register",
@@ -31,7 +31,13 @@ class SatokenConfig {
                         "/auth/auth/resetPasswordCode",
                         "/auth/auth/loginCode")
                     .check(StpUtil::checkLogin)
-
+            }
+            .setError {
+                when(it){
+                    is NotLoginException-> throw NotLoginException(it.message, null, null)
+                    is NotPermissionException,is NotRoleException -> throw NotPermissionException(it.message)
+                    else -> throw RuntimeException(it.message)
+                }
             }
 
     }

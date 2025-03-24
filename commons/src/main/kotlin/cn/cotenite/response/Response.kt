@@ -1,6 +1,6 @@
 package cn.cotenite.response
 
-import cn.cotenite.commons.Errors
+import cn.cotenite.enums.Errors
 import cn.cotenite.expection.BusinessException
 
 /**

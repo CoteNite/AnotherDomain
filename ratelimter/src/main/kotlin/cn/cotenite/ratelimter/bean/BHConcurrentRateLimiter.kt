@@ -1,6 +1,6 @@
 package cn.cotenite.ratelimter.bean
 
-import cn.cotenite.commons.Errors
+import cn.cotenite.enums.Errors
 import cn.cotenite.expection.BusinessException
 import java.util.concurrent.Callable
 import java.util.concurrent.ThreadPoolExecutor

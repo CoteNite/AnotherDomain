@@ -45,3 +45,8 @@ spring:
             allowed-origin-patterns: "*"
             allowed-methods: "*"
             allow-credentials: true
+      routes:
+        - id: auth
+          uri: https://localhost:8081
+          predicates:
+            - Path=/auth/**

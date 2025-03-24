@@ -2,9 +2,10 @@ package cn.cotenite.gateway.exception
 
 import cn.cotenite.asp.Slf4j
 import cn.cotenite.asp.Slf4j.Companion.log
-import cn.cotenite.commons.Errors
+import cn.cotenite.enums.Errors
 import cn.cotenite.response.Response
-import cn.dev33.satoken.exception.SaTokenException
+import cn.dev33.satoken.exception.NotLoginException
+import cn.dev33.satoken.exception.NotPermissionException
 import com.fasterxml.jackson.databind.ObjectMapper
 
 import org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler
@@ -34,14 +35,20 @@ class GlobalExceptionHandler(
 
         val result: Response
 
-        if (ex is SaTokenException) {
-            response.setStatusCode(HttpStatus.UNAUTHORIZED)
+        when(ex){
+            is NotLoginException -> {
+                response.setStatusCode(HttpStatus.UNAUTHORIZED)
+                result = Response.fail( "未携带 Token 令牌")
+            }
+            is NotPermissionException -> {
+                response.setStatusCode(HttpStatus.UNAUTHORIZED)
+                result = Response.fail(Errors.UNAUTHORIZED.message)
 
-            result = Response.fail(Errors.UNAUTHORIZED)
-        } else {
-            result = Response.fail(Errors.SERVER_ERROR)
+            }
+            else -> {
+                result = Response.fail(Errors.SERVER_ERROR)
+            }
         }
-
 
         response.headers.contentType = MediaType.APPLICATION_JSON_UTF8
 

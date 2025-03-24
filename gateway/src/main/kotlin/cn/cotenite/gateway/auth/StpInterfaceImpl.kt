@@ -2,7 +2,7 @@ package cn.cotenite.gateway.auth
 
 import cn.cotenite.asp.Slf4j
 import cn.cotenite.asp.Slf4j.Companion.log
-import cn.cotenite.commons.YesOrNo
+import cn.cotenite.enums.YesOrNo
 import cn.cotenite.gateway.commons.utils.RedisKeyCreator
 import cn.dev33.satoken.stp.StpInterface
 import org.redisson.api.RedissonClient
