@@ -64,12 +64,16 @@ class AuthController(
         return Response.success(handleLogin)
     }
 
-    @PostMapping("restPassword")
+    @PostMapping("/restPassword")
     fun restPassword(@RequestBody @Validated restPasswordInput: ResetPasswordInput): Response {
         authService.resetPassword(restPasswordInput)
         return Response.success()
     }
 
+    @GetMapping("/logout")
+    fun logout(): Response {
+        return Response.success()
+    }
 
 
 }

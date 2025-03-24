@@ -1,6 +1,8 @@
 spring:
   config:
-    import: nacos:gateway-dev.yaml
+    import:
+      - nacos:gateway-dev.yaml
+      - nacos:SaToken.yaml
   application:
     name: gateway
   profiles:

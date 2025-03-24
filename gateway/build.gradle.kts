@@ -9,6 +9,7 @@ group = "cn.cotenite"
 version = "0.0.1"
 
 val satokenVersion = "1.40.0"
+val redissonVersion = "3.23.5"
 
 
 dependencies {
@@ -27,9 +28,10 @@ dependencies {
     implementation("com.alibaba.csp:sentinel-spring-cloud-gateway-adapter:1.8.8")
     implementation("org.aspectj:aspectjweaver:1.9.20.1")
     implementation("com.google.guava:guava:33.4.0-jre")
+    implementation("org.redisson:redisson-spring-boot-starter:${redissonVersion}")
 
     implementation("cn.dev33:sa-token-redis-jackson:${satokenVersion}")
-    implementation("cn.dev33:sa-token-spring-boot3-starter:${satokenVersion}")
+    implementation("cn.dev33:sa-token-reactor-spring-boot3-starter:${satokenVersion}")
     implementation("org.apache.commons:commons-pool2:2.12.0")
 
     implementation(project(":commons"))
