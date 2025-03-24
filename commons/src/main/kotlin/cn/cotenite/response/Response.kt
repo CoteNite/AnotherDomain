@@ -38,6 +38,10 @@ data class Response(
             return Response(200,retryLater.message,null)
         }
 
+        fun fail(code: String, msg: String): Response {
+            return Response(code.toInt(),msg,null)
+        }
+
 
     }
 }

@@ -1,5 +1,6 @@
 package cn.cotenite.gateway.config
 
+import cn.cotenite.response.Response
 import cn.dev33.satoken.reactor.filter.SaReactorFilter
 import cn.dev33.satoken.router.SaRouter
 import cn.dev33.satoken.router.SaRouterStaff
@@ -31,9 +32,6 @@ class SatokenConfig {
                         "/auth/auth/loginCode")
                     .check(StpUtil::checkLogin)
 
-            }
-            .setError {
-                return@setError SaResult.error(it.message)
             }
 
     }

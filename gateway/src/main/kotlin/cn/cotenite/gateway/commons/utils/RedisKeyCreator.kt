@@ -1,4 +1,4 @@
-package cn.cotenite.gateway.utils
+package cn.cotenite.gateway.commons.utils
 
 import cn.cotenite.utils.RedisKeyBase
 
@@ -12,6 +12,6 @@ object RedisKeyCreator : RedisKeyBase() {
     private val PREFIX = BASE_KEY+"auth:"
 
     fun userPermissionHashKey(userId:Long):String {
-        return PREFIX+"userPermission:${userId}"
+        return PREFIX +"userPermission:${userId}"
     }
 }
