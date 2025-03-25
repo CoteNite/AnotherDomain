@@ -35,3 +35,13 @@ include("id-generator:id-generator-api")
 findProject(":id-generator:id-generator-api")?.name = "id-generator-api"
 include("gateway")
 include("ratelimter")
+include("oss")
+include("oss:oss-api")
+findProject(":oss:oss-api")?.name = "oss-api"
+include("oss:oss-core")
+findProject(":oss:oss-core")?.name = "oss-core"
+include("user")
+include("user:user-core")
+findProject(":user:user-core")?.name = "user-core"
+include("user:user-api")
+findProject(":user:user-api")?.name = "user-api"

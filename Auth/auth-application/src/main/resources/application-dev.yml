@@ -1,41 +1,10 @@
 server:
   port: 8081
-
-#spring:
-#  data:
-#    redis:
-#      database: 1
-#      host: 127.0.0.1
-#      port: 6379
-#      timeout: 10s
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3306/another_domain
-#    username: root
-#    password: ${database.password}
-#  mail:
-#    host: ${email.host}
-#    port: ${email.port}
-#    username: ${email.username}
-#    password: ${email.password}
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          enable: true
-#          ssl:
-#            enable: true
-#          socketFactoryClass: javax.net.ssl.SSLSocketFactory
-#      default-encoding: UTF-8
 jimmer:
   language: kotlin
   show-sql: true
   dialect: org.babyfish.jimmer.sql.dialect.MySqlDialect
   pretty-sql: true
-#sa-token:
-#  token-name: Authorization
-#  timeout: 604800
-#  token-style: simple-uuid
 dubbo:
   application:
     name: auth
@@ -61,3 +30,14 @@ rate:
           keepAliveTime: 30
           queueCapacity: 1
           timeout: 1
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: another_domain_group
+    send-message-timeout: 3000
+    retry-times-when-send-failed: 3
+    retry-times-when-send-async-failed: 3
+    max-message-size: 4096
+  consumer:
+    group: another_domain_group
+    pull-batch-size: 5 # 每次拉取的最大消息数

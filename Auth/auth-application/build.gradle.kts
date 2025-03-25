@@ -42,16 +42,17 @@ dependencies {
 
     implementation("org.apache.dubbo:dubbo:3.3.4")
     implementation("org.apache.dubbo:dubbo-spring-boot-starter:3.3.4")
-
     //Sentinel
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel:2023.0.3.2")
     implementation("com.alibaba.csp:sentinel-datasource-nacos:1.8.8")
     implementation("com.alibaba.csp:sentinel-web-servlet:1.8.8")
     implementation("com.alibaba.cloud:spring-cloud-alibaba-sentinel-gateway:2023.0.3.2")
+//    implementation("org.apache.rocketmq:rocketmq-spring-boot-starter:2.3.2")
 
     //项目间依赖管理
     implementation(project(":commons"))
     implementation(project(":id-generator:id-generator-api"))
+    implementation(project(":user:user-api"))
     implementation(project(":ratelimter"))
 
     runtimeOnly("mysql:mysql-connector-java:${mysqlConnectVersion}")

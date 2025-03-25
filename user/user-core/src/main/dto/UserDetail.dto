@@ -1,0 +1,9 @@
+export cn.cotenite.user.model.domain.UserDetail
+    -> package cn.cotenite.user.model.domain.dto
+
+input UserDetailSaveInput {
+    id
+    nickname
+    mail
+}
+

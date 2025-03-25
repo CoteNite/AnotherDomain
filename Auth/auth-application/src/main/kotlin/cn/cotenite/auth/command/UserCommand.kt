@@ -4,10 +4,12 @@ import cn.cotenite.auth.commons.enums.RoleCommons
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
 import cn.cotenite.auth.model.domain.dto.dto.UserDetailSaveInput
 import cn.cotenite.auth.model.domain.dto.dto.UserInput
+import cn.cotenite.auth.model.event.UserDetailCreateEvent
 import cn.cotenite.auth.model.po.dto.UserRoleSaveInput
 import cn.cotenite.auth.query.UserDetailQuery
 import cn.cotenite.auth.repo.UserRepository
 import cn.cotenite.auth.repo.UserRoleRepository
+import cn.cotenite.user.dto.UserDetailCreateDTO
 import cn.hutool.core.util.RandomUtil
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
@@ -20,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional
 */
 interface UserCommand{
 
-    fun handleRegister(email:String,password:String)
+    fun handleRegister(email:String,password:String):UserDetailCreateDTO
 
     fun handleLogin(id:String,password:String):Long
 
@@ -37,15 +39,14 @@ class UserCommandImpl(
 ): UserCommand {
 
     @Transactional(rollbackFor = [Exception::class])
-    override fun handleRegister(email: String, password: String) {
+    override fun handleRegister(email: String, password: String):UserDetailCreateDTO{
         val initUserNum = RandomUtil.randomString(9)
         val encode = passWordEncoder.encode(password)
         val input= UserInput(email,encode,initUserNum)
         val userId = userRepository.saveUser(input)
         val userRoleInput=UserRoleSaveInput(UserRoleSaveInput.TargetOf_user(userId), UserRoleSaveInput.TargetOf_role(RoleCommons.USER.roleId))
         userRoleRepository.saveUserRole4Register(userRoleInput)
-        val userDetailInput=UserDetailSaveInput(userId,"用户${initUserNum}")
-        userDetailQuery.initUserDetail(userDetailInput)
+        return UserDetailCreateDTO(userId,initUserNum,email)
     }
 
     override fun handleLogin(id: String, password: String):Long{

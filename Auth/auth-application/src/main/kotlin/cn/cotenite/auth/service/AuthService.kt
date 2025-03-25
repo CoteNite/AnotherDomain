@@ -3,10 +3,15 @@ package cn.cotenite.auth.service
 import cn.cotenite.asp.Slf4j
 import cn.cotenite.auth.command.UserCommand
 import cn.cotenite.auth.command.VerifyCommand
+import cn.cotenite.auth.commons.constants.MQConstants
 import cn.cotenite.auth.policy.EmailPolicy
 import cn.cotenite.auth.commons.utils.RedisKeyCreator
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
+import cn.cotenite.id.api.IdGeneratorService
+import cn.cotenite.user.query.UserDetailCreateQuery
 import cn.dev33.satoken.stp.StpUtil
+import com.alibaba.fastjson.JSON
+import org.apache.dubbo.config.annotation.DubboReference
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -33,7 +38,9 @@ interface AuthService {
 class AuthServiceImpl(
     private val verifyCommand: VerifyCommand,
     private val userCommand: UserCommand,
-    private val sendUtils: EmailPolicy
+    private val sendUtils: EmailPolicy,
+    @DubboReference(interfaceClass = UserDetailCreateQuery::class, version = "1.0")
+    private val userDetailCreateQuery: UserDetailCreateQuery
 ):AuthService{
 
 
@@ -47,10 +54,11 @@ class AuthServiceImpl(
     override fun doRegister(email: String, password: String, verifyCode: String) {
         val key = RedisKeyCreator.registerCodeKey(email)
         verifyCommand.handleCheck(key, verifyCode)
-        userCommand.handleRegister(email,password)
+        val userDetailCreateDTO = userCommand.handleRegister(email, password)
+        userDetailCreateQuery.createUserDetail(userDetailCreateDTO)
     }
 
-
+    @Transactional(rollbackFor = [Exception::class])
     override fun doLogin(number:String, password:String, verifyKey:String,verifyCode:String):Long {
         val key = RedisKeyCreator.loginCodeKey(verifyKey)
         verifyCommand.handleCheck(key,verifyCode)

@@ -1,0 +1,28 @@
+server:
+  port: 8085
+jimmer:
+  language: kotlin
+  show-sql: true
+  dialect: org.babyfish.jimmer.sql.dialect.MySqlDialect
+  pretty-sql: true
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: another_domain_group
+    send-message-timeout: 3000
+    retry-times-when-send-failed: 3
+    retry-times-when-send-async-failed: 3
+    max-message-size: 4096
+  consumer:
+    group: another_domain_group
+    pull-batch-size: 5
+dubbo:
+  application:
+    name: user
+    version: 1.0
+    qos-port: 22224
+  registry:
+    address: nacos://127.0.0.1:8848
+  protocol:
+    name: dubbo
+    port: -1

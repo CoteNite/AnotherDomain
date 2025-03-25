@@ -49,9 +49,8 @@ class AddUserId2HeaderFilter(
 
         val tokenRedisKey = RedisKeyConstants.SA_TOKEN_TOKEN_KEY_PREFIX + token
 
-        val userId = redissonClient.getBucket<String>(tokenRedisKey).get()
-            ?: return chain?.filter(exchange)
-                ?:throw BusinessException(Errors.SERVER_ERROR)
+        val userIdNum = redissonClient.getBucket<Number>(tokenRedisKey).get()
+        val userId=userIdNum.toString()
 
         val newExchange = exchange.mutate().request { it.header(GlobalConstants.USER_ID, userId) }.build()
 

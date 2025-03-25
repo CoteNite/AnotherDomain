@@ -28,7 +28,13 @@
             <option value="$PROJECT_DIR$/id-generator" />
             <option value="$PROJECT_DIR$/id-generator/id-generator-api" />
             <option value="$PROJECT_DIR$/id-generator/id-generator-core" />
+            <option value="$PROJECT_DIR$/oss" />
+            <option value="$PROJECT_DIR$/oss/oss-api" />
+            <option value="$PROJECT_DIR$/oss/oss-core" />
             <option value="$PROJECT_DIR$/ratelimter" />
+            <option value="$PROJECT_DIR$/user" />
+            <option value="$PROJECT_DIR$/user/user-api" />
+            <option value="$PROJECT_DIR$/user/user-core" />
           </set>
         </option>
       </GradleProjectSettings>

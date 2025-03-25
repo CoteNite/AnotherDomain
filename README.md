@@ -34,6 +34,10 @@ Rpc框架：Dubbo
 
 限流：Sentinel
 
+消息队列：RocketMQ
+
+文件存储：Minio 
+
 **未完待续......**
 
 如果您觉得对您有帮助的话可以点个star
