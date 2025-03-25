@@ -4,7 +4,6 @@ import cn.cotenite.auth.commons.utils.RedisKeyCreator
 import cn.cotenite.auth.repo.VerifyRepository
 import cn.cotenite.auth.model.dto.req.CaptchaReqDTO
 import cn.hutool.captcha.CaptchaUtil
-import cn.hutool.core.util.RandomUtil
 import org.springframework.stereotype.Service
 
 /**

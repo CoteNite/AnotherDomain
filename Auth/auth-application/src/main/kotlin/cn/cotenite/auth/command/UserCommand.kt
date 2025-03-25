@@ -2,11 +2,8 @@ package cn.cotenite.auth.command
 
 import cn.cotenite.auth.commons.enums.RoleCommons
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
-import cn.cotenite.auth.model.domain.dto.dto.UserDetailSaveInput
 import cn.cotenite.auth.model.domain.dto.dto.UserInput
-import cn.cotenite.auth.model.event.UserDetailCreateEvent
 import cn.cotenite.auth.model.po.dto.UserRoleSaveInput
-import cn.cotenite.auth.query.UserDetailQuery
 import cn.cotenite.auth.repo.UserRepository
 import cn.cotenite.auth.repo.UserRoleRepository
 import cn.cotenite.user.dto.UserDetailCreateDTO
@@ -33,7 +30,6 @@ interface UserCommand{
 @Service
 class UserCommandImpl(
     private val userRepository: UserRepository,
-    private val userDetailQuery: UserDetailQuery,
     private val userRoleRepository: UserRoleRepository,
     private val passWordEncoder: PasswordEncoder
 ): UserCommand {

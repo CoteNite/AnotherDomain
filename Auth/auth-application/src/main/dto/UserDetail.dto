@@ -1,8 +1,0 @@
-export cn.cotenite.auth.model.read.UserDetail
-    -> package cn.cotenite.auth.model.domain.dto.dto
-
-
-input UserDetailSaveInput {
-    id
-    nickname
-}

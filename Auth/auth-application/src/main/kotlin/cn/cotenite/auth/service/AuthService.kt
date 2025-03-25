@@ -3,14 +3,11 @@ package cn.cotenite.auth.service
 import cn.cotenite.asp.Slf4j
 import cn.cotenite.auth.command.UserCommand
 import cn.cotenite.auth.command.VerifyCommand
-import cn.cotenite.auth.commons.constants.MQConstants
 import cn.cotenite.auth.policy.EmailPolicy
 import cn.cotenite.auth.commons.utils.RedisKeyCreator
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
-import cn.cotenite.id.api.IdGeneratorService
 import cn.cotenite.user.query.UserDetailCreateQuery
 import cn.dev33.satoken.stp.StpUtil
-import com.alibaba.fastjson.JSON
 import org.apache.dubbo.config.annotation.DubboReference
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
