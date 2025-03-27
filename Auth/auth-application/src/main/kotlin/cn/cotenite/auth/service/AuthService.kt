@@ -7,6 +7,7 @@ import cn.cotenite.auth.policy.EmailPolicy
 import cn.cotenite.auth.commons.utils.RedisKeyCreator
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
 import cn.cotenite.user.query.UserDetailDubboCommand
+import io.seata.spring.annotation.GlobalTransactional
 import org.apache.dubbo.config.annotation.DubboReference
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -47,6 +48,7 @@ class AuthServiceImpl(
         sendUtils.sendMail4Register(email)
     }
 
+    @GlobalTransactional(rollbackFor = [Exception::class])
     override fun doRegister(email: String, password: String, verifyCode: String) {
         val key = RedisKeyCreator.registerCodeKey(email)
         verifyCommand.handleCheck(key, verifyCode)

@@ -49,11 +49,16 @@ dependencies {
     implementation("com.alibaba.cloud:spring-cloud-alibaba-sentinel-gateway:2023.0.3.2")
 //    implementation("org.apache.rocketmq:rocketmq-spring-boot-starter:2.3.2")
 
+    //seata
+    implementation("org.apache.seata:seata-spring-boot-starter:2.3.0")
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-seata:2023.0.3.2")
+
     //项目间依赖管理
     implementation(project(":commons"))
     implementation(project(":id-generator:id-generator-api"))
     implementation(project(":user:user-api"))
     implementation(project(":ratelimter"))
+
 
     runtimeOnly("mysql:mysql-connector-java:${mysqlConnectVersion}")
 

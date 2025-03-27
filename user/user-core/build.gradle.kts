@@ -36,9 +36,12 @@ dependencies {
     implementation("org.apache.dubbo:dubbo:3.3.4")
     implementation("org.apache.dubbo:dubbo-spring-boot-starter:3.3.4")
 
+    //seata
+    implementation("org.apache.seata:seata-spring-boot-starter:2.3.0")
+    implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-seata:2023.0.3.2")
+
     implementation(project(":commons"))
     implementation(project(":user:user-api"))
-
 
     runtimeOnly("mysql:mysql-connector-java:${mysqlConnectVersion}")
 

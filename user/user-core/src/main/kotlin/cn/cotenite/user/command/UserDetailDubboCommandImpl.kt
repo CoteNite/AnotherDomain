@@ -4,6 +4,7 @@ import cn.cotenite.user.dto.UserDetailCreateDTO
 import cn.cotenite.user.model.domain.dto.UserDetailSaveInput
 import cn.cotenite.user.query.UserDetailDubboCommand
 import cn.cotenite.user.repository.UserDetailRepository
+import io.seata.spring.annotation.GlobalTransactional
 import org.apache.dubbo.config.annotation.DubboService
 import org.springframework.web.bind.annotation.CrossOrigin
 
