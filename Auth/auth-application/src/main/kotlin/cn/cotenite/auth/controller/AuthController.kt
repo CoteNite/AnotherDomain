@@ -62,8 +62,8 @@ class AuthController(
     @PostMapping("/login")
     fun login(@RequestBody @Validated loginReqDTO: LoginReqDTO):Response{
         val (number, password, verifyKey,verifyCode) = loginReqDTO
-        val handleLogin = authService.doLogin(number, password, verifyKey, verifyCode)
-        return Response.success(handleLogin)
+        authService.doLogin(number, password, verifyKey, verifyCode)
+        return Response.success()
     }
 
     @PostMapping("/restPassword")

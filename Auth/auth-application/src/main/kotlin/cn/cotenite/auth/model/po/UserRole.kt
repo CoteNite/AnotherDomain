@@ -2,7 +2,7 @@ package cn.cotenite.auth.model.po
 
 import cn.cotenite.auth.commons.enums.Blacked
 import cn.cotenite.auth.commons.utils.SnowflakeIdGenerator
-import cn.cotenite.auth.model.domain.agg.User
+import cn.cotenite.auth.model.domain.User
 import org.babyfish.jimmer.sql.*
 import java.time.LocalTime
 

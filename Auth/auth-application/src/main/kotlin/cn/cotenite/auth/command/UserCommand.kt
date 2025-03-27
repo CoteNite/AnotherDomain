@@ -21,7 +21,7 @@ interface UserCommand{
 
     fun handleRegister(email:String,password:String):UserDetailCreateDTO
 
-    fun handleLogin(id:String,password:String):Long
+    fun handleLogin(id:String,password:String)
 
     fun handleRestPassword(restPasswordInput: ResetPasswordInput)
 
@@ -45,9 +45,9 @@ class UserCommandImpl(
         return UserDetailCreateDTO(userId,initUserNum,email)
     }
 
-    override fun handleLogin(id: String, password: String):Long{
+    override fun handleLogin(id: String, password: String){
         val user=userRepository.login(id)
-        return user.verify(password)
+        user.login(password)
     }
 
     override fun handleRestPassword(restPasswordInput: ResetPasswordInput) {

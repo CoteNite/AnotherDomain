@@ -1,16 +1,14 @@
-package cn.cotenite.auth.model.domain.agg
+package cn.cotenite.auth.model.domain
 
 import cn.cotenite.auth.commons.enums.Delete
 import cn.cotenite.auth.commons.utils.SnowflakeIdGenerator
-import cn.cotenite.auth.model.po.Permission
 import cn.cotenite.auth.model.po.Role
 import cn.cotenite.auth.model.po.UserRole
 import cn.cotenite.expection.BusinessException
-import org.babyfish.jimmer.Immutable
+import cn.dev33.satoken.stp.StpUtil
 import org.babyfish.jimmer.sql.*
 import org.springframework.security.crypto.bcrypt.BCrypt
 import java.time.LocalTime
-import java.util.Arrays
 
 /**
  * @Author  RichardYoung
@@ -49,13 +47,13 @@ interface User{
     @LogicalDeleted("DELETED")
     val delete: Delete
 
-    fun verify(password: String):Long{
+    fun login(password: String) {
 
         val verifyPwd = BCrypt.checkpw(password,this.password)
         if (!verifyPwd){
             throw BusinessException("用户名或密码错误")
         }
-        return this.id
+        StpUtil.login(this.id)
     }
 
 }

@@ -3,7 +3,7 @@ package cn.cotenite.auth.repo
 
 import cn.cotenite.asp.Slf4j
 import cn.cotenite.auth.commons.utils.RedisKeyCreator
-import cn.cotenite.auth.model.domain.agg.*
+import cn.cotenite.auth.model.domain.*
 
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
 import cn.cotenite.auth.model.domain.dto.dto.UserInput

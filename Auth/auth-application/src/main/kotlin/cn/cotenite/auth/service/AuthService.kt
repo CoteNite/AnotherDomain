@@ -6,8 +6,7 @@ import cn.cotenite.auth.command.VerifyCommand
 import cn.cotenite.auth.policy.EmailPolicy
 import cn.cotenite.auth.commons.utils.RedisKeyCreator
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
-import cn.cotenite.user.query.UserDetailCreateQueryService
-import cn.dev33.satoken.stp.StpUtil
+import cn.cotenite.user.query.UserDetailDubboCommand
 import org.apache.dubbo.config.annotation.DubboReference
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -22,7 +21,7 @@ interface AuthService {
 
     fun doRegister(email:String, password:String, verifyCode:String)
 
-    fun doLogin(number:String, password:String, verifyKey:String, verifyCode:String):Long
+    fun doLogin(number:String, password:String, verifyKey:String, verifyCode:String)
 
     fun resetPassword(restPasswordInput: ResetPasswordInput)
 
@@ -36,8 +35,8 @@ class AuthServiceImpl(
     private val verifyCommand: VerifyCommand,
     private val userCommand: UserCommand,
     private val sendUtils: EmailPolicy,
-    @DubboReference(interfaceClass = UserDetailCreateQueryService::class, version = "1.0")
-    private val userDetailCreateQueryService: UserDetailCreateQueryService
+    @DubboReference(interfaceClass = UserDetailDubboCommand::class, version = "1.0")
+    private val userDetailDubboCommand: UserDetailDubboCommand
 ):AuthService{
 
 
@@ -52,17 +51,14 @@ class AuthServiceImpl(
         val key = RedisKeyCreator.registerCodeKey(email)
         verifyCommand.handleCheck(key, verifyCode)
         val userDetailCreateDTO = userCommand.handleRegister(email, password)
-        userDetailCreateQueryService.createUserDetail(userDetailCreateDTO)
+        userDetailDubboCommand.createUserDetail(userDetailCreateDTO)
     }
 
     @Transactional(rollbackFor = [Exception::class])
-    override fun doLogin(number:String, password:String, verifyKey:String,verifyCode:String):Long {
+    override fun doLogin(number:String, password:String, verifyKey:String,verifyCode:String) {
         val key = RedisKeyCreator.loginCodeKey(verifyKey)
         verifyCommand.handleCheck(key,verifyCode)
-        val loginId = userCommand.handleLogin(number, password)
-        StpUtil.login(loginId)
-        return loginId
-
+        userCommand.handleLogin(number, password)
     }
 
     override fun resetPassword(restPasswordInput: ResetPasswordInput) {

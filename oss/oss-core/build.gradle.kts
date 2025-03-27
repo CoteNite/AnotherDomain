@@ -20,6 +20,8 @@ dependencies {
 
     implementation("io.minio:minio:8.5.3")
 
+    implementation(project(":commons"))
+
     testImplementation(kotlin("test"))
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")

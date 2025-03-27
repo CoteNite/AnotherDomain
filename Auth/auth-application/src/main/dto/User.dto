@@ -1,4 +1,4 @@
-export cn.cotenite.auth.model.domain.agg.User
+export cn.cotenite.auth.model.domain.User
     -> package cn.cotenite.auth.model.domain.dto.dto
 
 import jakarta.validation.constraints.Pattern

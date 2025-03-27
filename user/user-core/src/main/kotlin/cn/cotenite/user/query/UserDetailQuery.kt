@@ -6,6 +6,7 @@ import cn.cotenite.user.model.domain.dto.UserDetailUpdateInput
 import cn.cotenite.user.model.domain.dto.UserDetailView
 import cn.cotenite.user.repository.UserDetailRepository
 import cn.cotenite.utils.UserIdContextHolder
+import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
@@ -16,25 +17,20 @@ import org.springframework.web.bind.annotation.RestController
  * @Description
  * @Date  2025/3/27 07:49
  */
-@RestController
-@RequestMapping("user")
-class UserDetailQuery(
-    private val userDetailRepository: UserDetailRepository
-){
+interface UserDetailQuery {
+    fun getUserDetailAll(): UserDetailView
+}
 
-    @GetMapping("/getAll")
-    fun getUserDetailAll(): UserDetailView {
+@Service
+class UserDetailQueryImpl(
+    private val userDetailRepository: UserDetailRepository
+):UserDetailQuery{
+
+    override fun getUserDetailAll(): UserDetailView {
         val id = UserIdContextHolder.getId()
         return userDetailRepository.getUserDetailAll(id)
     }
 
-    @PostMapping("/updateUser")
-    fun updateUserDetail(input: UserDetailUpdateInput){
-        val id = UserIdContextHolder.getId()
-        if (input.id != id){
-            throw BusinessException(Errors.UNAUTHORIZED)
-        }
-        userDetailRepository.updateUserDetail(input)
-    }
+
 
 }

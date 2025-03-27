@@ -1,6 +1,7 @@
 package cn.cotenite.user.model.domain
 
 import cn.cotenite.user.commons.enums.Delete
+import cn.cotenite.user.commons.enums.Gender
 import org.babyfish.jimmer.sql.*
 import java.time.LocalTime
 
@@ -17,7 +18,7 @@ interface UserDetail {
 
     val nickname:String
 
-    val gender:String?
+    val gender:Gender?
 
     val avatar:String?
 

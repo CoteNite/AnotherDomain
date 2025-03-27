@@ -7,7 +7,7 @@ import cn.cotenite.user.dto.UserDetailCreateDTO
  * @Description
  * @Date  2025/3/25 15:58
  */
-interface UserDetailCreateQueryService {
+interface UserDetailDubboCommand{
 
     fun createUserDetail(userDetailCreateDTO: UserDetailCreateDTO)
 

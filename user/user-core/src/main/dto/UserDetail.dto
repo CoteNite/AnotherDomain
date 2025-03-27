@@ -1,6 +1,12 @@
 export cn.cotenite.user.model.domain.UserDetail
     -> package cn.cotenite.user.model.domain.dto
 
+import org.hibernate.validator.constraints.Length
+import jakarta.validation.constraints.Max
+
+import jakarta.validation.constraints.Min
+import jakarta.validation.constraints.Pattern
+
 input UserDetailSaveInput {
     id
     nickname
@@ -18,9 +24,15 @@ UserDetailView{
 
 input UserDetailUpdateInput{
     id,
+    avatar,
+    @Length(max = 25)
     nickname,
+    @Min(0)
+    @Max(1)
     gender,
+    @Pattern(regexp = "\\w[-\\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\\.)+[A-Za-z]{2,14}", message = "邮箱格式不正确")
     mail,
+    @Length(max = 100)
     description,
     webUrl
 }

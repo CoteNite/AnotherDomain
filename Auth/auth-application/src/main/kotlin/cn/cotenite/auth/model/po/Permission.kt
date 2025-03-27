@@ -1,6 +1,5 @@
 package cn.cotenite.auth.model.po
 
-import cn.cotenite.auth.model.domain.agg.User
 import org.babyfish.jimmer.sql.*
 import java.time.LocalTime
 

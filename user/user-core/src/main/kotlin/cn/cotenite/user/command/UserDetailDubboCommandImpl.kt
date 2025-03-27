@@ -1,25 +1,22 @@
-package cn.cotenite.user.query
+package cn.cotenite.user.command
 
 import cn.cotenite.user.dto.UserDetailCreateDTO
 import cn.cotenite.user.model.domain.dto.UserDetailSaveInput
+import cn.cotenite.user.query.UserDetailDubboCommand
 import cn.cotenite.user.repository.UserDetailRepository
 import org.apache.dubbo.config.annotation.DubboService
 import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
 
 /**
  * @Author  RichardYoung
  * @Description
  * @Date  2025/3/25 16:01
  */
-@RestController
 @CrossOrigin("*")
-@RequestMapping("/user")
 @DubboService(version = "1.0")
-class UserDetailCreateQuery4Dubbo(
-    val userDetailRepository: UserDetailRepository
-):UserDetailCreateQueryService {
+class UserDetailDubboCommandImpl(
+    private val userDetailRepository: UserDetailRepository
+): UserDetailDubboCommand {
 
     override fun createUserDetail(userDetailCreateDTO: UserDetailCreateDTO) {
         val userDetailSaveInput = userDetailCreateDTO.run{ UserDetailSaveInput(id, userNum, email) }

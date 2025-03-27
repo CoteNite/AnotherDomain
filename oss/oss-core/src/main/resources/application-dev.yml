@@ -1,3 +1,9 @@
 server:
   port: 8084
+minio:
+  endpoint: http://localhost:9005
+  accessKey: name
+  secretKey: password
+
+
 
