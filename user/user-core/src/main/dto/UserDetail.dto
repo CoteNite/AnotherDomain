@@ -7,3 +7,20 @@ input UserDetailSaveInput {
     mail
 }
 
+UserDetailView{
+    avatar,
+    nickname,
+    gender,
+    mail,
+    description,
+    webUrl
+}
+
+input UserDetailUpdateInput{
+    id,
+    nickname,
+    gender,
+    mail,
+    description,
+    webUrl
+}

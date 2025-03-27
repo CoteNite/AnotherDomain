@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController
 @CrossOrigin("*")
 @RequestMapping("/user")
 @DubboService(version = "1.0")
-class UserDetailCreateQueryImpl(
+class UserDetailCreateQuery4Dubbo(
     val userDetailRepository: UserDetailRepository
-):UserDetailCreateQuery {
+):UserDetailCreateQueryService {
 
     override fun createUserDetail(userDetailCreateDTO: UserDetailCreateDTO) {
         val userDetailSaveInput = userDetailCreateDTO.run{ UserDetailSaveInput(id, userNum, email) }

@@ -37,7 +37,9 @@
             <option value="$PROJECT_DIR$/user/user-core" />
           </set>
         </option>
+        <option name="resolveExternalAnnotations" value="true" />
       </GradleProjectSettings>
     </option>
+    <option name="offlineMode" value="true" />
   </component>
 </project>

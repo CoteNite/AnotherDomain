@@ -23,7 +23,7 @@ interface UserDetail {
 
     val mail:String
 
-    val desc:String?
+    val description:String?
 
     val webUrl:String?
 

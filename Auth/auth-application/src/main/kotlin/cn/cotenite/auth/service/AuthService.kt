@@ -6,7 +6,7 @@ import cn.cotenite.auth.command.VerifyCommand
 import cn.cotenite.auth.policy.EmailPolicy
 import cn.cotenite.auth.commons.utils.RedisKeyCreator
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
-import cn.cotenite.user.query.UserDetailCreateQuery
+import cn.cotenite.user.query.UserDetailCreateQueryService
 import cn.dev33.satoken.stp.StpUtil
 import org.apache.dubbo.config.annotation.DubboReference
 import org.springframework.stereotype.Service
@@ -36,8 +36,8 @@ class AuthServiceImpl(
     private val verifyCommand: VerifyCommand,
     private val userCommand: UserCommand,
     private val sendUtils: EmailPolicy,
-    @DubboReference(interfaceClass = UserDetailCreateQuery::class, version = "1.0")
-    private val userDetailCreateQuery: UserDetailCreateQuery
+    @DubboReference(interfaceClass = UserDetailCreateQueryService::class, version = "1.0")
+    private val userDetailCreateQueryService: UserDetailCreateQueryService
 ):AuthService{
 
 
@@ -52,7 +52,7 @@ class AuthServiceImpl(
         val key = RedisKeyCreator.registerCodeKey(email)
         verifyCommand.handleCheck(key, verifyCode)
         val userDetailCreateDTO = userCommand.handleRegister(email, password)
-        userDetailCreateQuery.createUserDetail(userDetailCreateDTO)
+        userDetailCreateQueryService.createUserDetail(userDetailCreateDTO)
     }
 
     @Transactional(rollbackFor = [Exception::class])

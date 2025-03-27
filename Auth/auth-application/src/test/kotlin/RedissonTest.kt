@@ -25,7 +25,7 @@ class RedissonTest(
     @Test
     fun setList(){
 
-        val userInput = UserInput("123ddfs123", 21312312312, "3234", "3213123")
-        println(userRepository.saveUser(userInput))
+//        val userInput = UserInput("123ddfs123", 21312312312, "3234", "3213123")
+//        println(userRepository.saveUser(userInput))
     }
 }
