@@ -1,0 +1,9 @@
+export cn.cotenite.note.models.domain.Note
+    -> package cn.cotenite.note.models.dto
+
+input NoteCreateInput {
+    creatorId
+    type
+    top
+    visible
+}

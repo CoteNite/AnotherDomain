@@ -1,7 +1,7 @@
 package cn.cotenite.kv.command
 
 import cn.cotenite.api.command.NoteContentCommand
-import cn.cotenite.api.dto.AddNoteContentReqDTO
+import cn.cotenite.api.dto.UpdateNoteContentReqDTO
 import cn.cotenite.kv.model.dataobject.NoteContent
 import cn.cotenite.kv.repository.NoteContentRepository
 import org.apache.dubbo.config.annotation.DubboService
@@ -18,16 +18,18 @@ import java.util.*
 class NoteContentCommandImpl(
     private val noteContentRepository: NoteContentRepository
 ): NoteContentCommand {
-    override fun addNoteContent(reqDTO: AddNoteContentReqDTO) {
-        val noteContent = NoteContent(reqDTO.noteId, reqDTO.content)
+    override fun addNoteContent(content: String):UUID{
+        val randomUUID = UUID.randomUUID()
+        val noteContent = NoteContent(randomUUID, content)
         noteContentRepository.insert(noteContent)
+        return randomUUID
     }
 
     override fun deleteNoteContent(noteId: UUID) {
         noteContentRepository.deleteNoteContentById(noteId)
     }
 
-    override fun updateNoteContent(reqDTO: AddNoteContentReqDTO) {
+    override fun updateNoteContent(reqDTO: UpdateNoteContentReqDTO) {
         noteContentRepository.updateNoteContentById(reqDTO.noteId, reqDTO.content)
     }
 }

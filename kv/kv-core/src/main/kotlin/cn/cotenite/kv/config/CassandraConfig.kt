@@ -12,11 +12,11 @@ import org.springframework.data.cassandra.config.AbstractCassandraConfiguration
 @Configuration
 class CassandraConfig(
     @Value("\${spring.cassandra.keyspace-name}")
-    val keyspaceName:String,
+    private var keyspaceName:String,
     @Value("\${spring.cassandra.contact-points}")
-    val contactPoints:String,
+    private var contactPoints:String,
     @Value("\${spring.cassandra.port}")
-    val port:Int
+    private var port:Int
 ):AbstractCassandraConfiguration(){
     public override fun getKeyspaceName(): String {
         return keyspaceName

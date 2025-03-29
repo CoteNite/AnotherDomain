@@ -1,6 +1,6 @@
 package cn.cotenite.api.command
 
-import cn.cotenite.api.dto.AddNoteContentReqDTO
+import cn.cotenite.api.dto.UpdateNoteContentReqDTO
 import java.util.*
 
 /**
@@ -10,10 +10,10 @@ import java.util.*
  */
 interface NoteContentCommand {
 
-    fun addNoteContent(reqDTO: AddNoteContentReqDTO)
+    fun addNoteContent(content:String): UUID
 
     fun deleteNoteContent(noteId: UUID)
 
-    fun updateNoteContent(reqDTO: AddNoteContentReqDTO)
+    fun updateNoteContent(reqDTO: UpdateNoteContentReqDTO)
 
 }

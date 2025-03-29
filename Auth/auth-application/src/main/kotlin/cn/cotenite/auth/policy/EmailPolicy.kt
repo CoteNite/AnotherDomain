@@ -62,7 +62,8 @@ class EmailPolicy(
             helper.setFrom(from)
             helper.setTo(email)
             helper.setSubject("欢迎使用AnotherDomain")
-            helper.setText("""您的邮箱关联的账号正在尝试重置密码<br>
+            helper.setText("""
+                您的邮箱关联的账号正在尝试重置密码<br>
                 您的验证码为：<b>${code}<b/> <br>
                 有效期三分钟，请妥善保管。<br>
                 若非本人操作，则说明您的账号可能泄漏，请立即修改密码或冻结账户。<br>
@@ -95,7 +96,7 @@ class EmailPolicy(
                 AnotherDomain团队
                 """,true)
             taskExecutor.submit{mailSender.send(helper.mimeMessage)}
-            verifyCommand.handleRegisterCode(email,code)
+            verifyCommand.handleCancelCode(email,code)
         }catch (e:Exception){
             throw BusinessException("邮件发送错误")
         }

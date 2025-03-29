@@ -5,6 +5,7 @@ jimmer:
   show-sql: true
   dialect: org.babyfish.jimmer.sql.dialect.MySqlDialect
   pretty-sql: true
+
 dubbo:
   application:
     name: note

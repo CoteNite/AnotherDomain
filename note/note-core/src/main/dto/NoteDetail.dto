@@ -1,0 +1,10 @@
+export cn.cotenite.note.models.read.NoteDetail
+-> package cn.cotenite.note.models.dto
+
+input NoteDetailCreateInput {
+    id
+    title
+    contentUUID?
+    imgUris?
+    videoUri?
+}

@@ -22,6 +22,9 @@ interface VerifyCommand {
     fun checkExist(key: String)
 
     fun handleRestPasswordCode(email:String,code:String)
+
+    fun handleCancelCode(email:String,code:String)
+
 }
 
 @Service
@@ -57,6 +60,11 @@ class VerifyCommandImpl(
     override fun handleRestPasswordCode(email: String,code:String) {
         val newKey= RedisKeyCreator.resetPasswordCodeKey(email)
         verifyRepository.saveRegisterKey(newKey,code)
+    }
+
+    override fun handleCancelCode(email: String, code: String) {
+        val key = RedisKeyCreator.cancelKey(email)
+        verifyRepository.saveRegisterKey(key,code)
     }
 
 }

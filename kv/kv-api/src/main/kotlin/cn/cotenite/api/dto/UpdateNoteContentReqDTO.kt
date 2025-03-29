@@ -8,7 +8,7 @@ import java.util.*
  * @Description
  * @Date  2025/3/29 20:26
  */
-data class AddNoteContentReqDTO(
+data class UpdateNoteContentReqDTO(
     val noteId: UUID,
     val content:String
 )
