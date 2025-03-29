@@ -21,10 +21,7 @@ class UserDetailCommandImpl(
     private val userDetailRepository: UserDetailRepository
 ): UserDetailCommand {
     override fun updateUserDetail( input: UserDetailUpdateInput){
-        val id = UserIdContextHolder.getId()
-        if (input.id != id){
-            throw BusinessException(Errors.UNAUTHORIZED)
-        }
+        UserIdContextHolder.verifyUser(input.id)
         userDetailRepository.updateUserDetail(input)
     }
 }

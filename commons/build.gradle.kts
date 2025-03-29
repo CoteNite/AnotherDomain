@@ -23,6 +23,7 @@ dependencies {
     implementation("javax.validation:validation-api:2.0.1.Final")
     implementation("org.springframework.boot:spring-boot-starter-web:3.4.3")
     implementation("com.alibaba:transmittable-thread-local:2.14.5")
+    implementation("org.apache.dubbo:dubbo:3.3.4")
 
 
     ksp("org.babyfish.jimmer:jimmer-ksp:${jimmerVersion}")

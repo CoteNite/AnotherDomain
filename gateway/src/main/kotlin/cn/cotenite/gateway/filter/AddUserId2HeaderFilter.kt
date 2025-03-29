@@ -5,7 +5,6 @@ import cn.cotenite.constants.GlobalConstants
 import cn.cotenite.enums.Errors
 import cn.cotenite.expection.BusinessException
 import cn.cotenite.gateway.constants.RedisKeyConstants
-import cn.dev33.satoken.stp.StpUtil
 import cn.hutool.core.collection.CollUtil
 import org.redisson.api.RedissonClient
 import org.springframework.cloud.gateway.filter.GatewayFilterChain
@@ -13,7 +12,6 @@ import org.springframework.cloud.gateway.filter.GlobalFilter
 import org.springframework.stereotype.Component
 import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
-import java.util.Objects
 
 
 /**

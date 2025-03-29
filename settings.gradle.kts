@@ -45,3 +45,8 @@ include("user:user-core")
 findProject(":user:user-core")?.name = "user-core"
 include("user:user-api")
 findProject(":user:user-api")?.name = "user-api"
+include("kv")
+include("kv:kv-core")
+findProject(":kv:kv-core")?.name = "kv-core"
+include("kv:kv-api")
+findProject(":kv:kv-api")?.name = "kv-api"

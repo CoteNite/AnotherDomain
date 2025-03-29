@@ -1,0 +1,54 @@
+server:
+  port: 8085
+dubbo:
+  application:
+    name: auth
+    version: 1.0
+    qos-port: 22223
+  registry:
+    address: nacos://127.0.0.1:8848
+  protocol:
+    name: dubbo
+    port: -1
+seata:
+  application-id: ${spring.application.name}
+  enabled: true
+  data-source-proxy-mode: AT
+  enable-auto-data-source-proxy: true
+  
+  # 配置中心 (Nacos)
+  config:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      namespace: seata_another_domain
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+
+  # 注册中心 (Nacos)
+  registry:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      application: seata-server
+      namespace: seata_another_domain
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+
+  # 事务服务组配置
+  service:
+    vgroup-mapping:
+      default_tx_group: default  # 事务分组与TC集群的映射关系[4](@ref)
+    disable-global-transaction: false
+    grouplist:
+      default: 127.0.0.1:8091   # TC服务地址列表
+
+  # 事务组名称
+  tx-service-group: default_tx_group
+spring:
+  cassandra:
+    keyspace-name: another_domain
+    contact-points: 192.168.30.128
+    port: 9042

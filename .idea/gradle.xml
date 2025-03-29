@@ -28,6 +28,9 @@
             <option value="$PROJECT_DIR$/id-generator" />
             <option value="$PROJECT_DIR$/id-generator/id-generator-api" />
             <option value="$PROJECT_DIR$/id-generator/id-generator-core" />
+            <option value="$PROJECT_DIR$/kv" />
+            <option value="$PROJECT_DIR$/kv/kv-api" />
+            <option value="$PROJECT_DIR$/kv/kv-core" />
             <option value="$PROJECT_DIR$/oss" />
             <option value="$PROJECT_DIR$/oss/oss-api" />
             <option value="$PROJECT_DIR$/oss/oss-core" />
@@ -40,6 +43,5 @@
         <option name="resolveExternalAnnotations" value="true" />
       </GradleProjectSettings>
     </option>
-    <option name="offlineMode" value="true" />
   </component>
 </project>
