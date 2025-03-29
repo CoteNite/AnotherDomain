@@ -1,5 +1,8 @@
 package cn.cotenite.auth.model.domain
 
+import cn.cotenite.enums.Errors
+import cn.cotenite.expection.BusinessException
+
 
 /**
  * @Author  RichardYoung
@@ -12,7 +15,7 @@ class Verify(
 ){
     fun verify(code:String){
         if (code != verifyCode) {
-            throw Exception("验证码错误")
+            throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
         }
     }
 

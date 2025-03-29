@@ -41,8 +41,10 @@ class EmailPolicy(
                 您的验证码为：<b>${code}<b/> <br>
                 有效期三分钟，请妥善保管。<br>
                 感谢您的信赖与使用！<br>
-                AnotherDomain团队<br>
-                若非本人操作，请忽略此邮件。
+                <br>
+                若非本人操作，请忽略此邮件。<br>
+                <br>
+                AnotherDomain团队
                 """,true)
             taskExecutor.submit{mailSender.send(helper.mimeMessage)}
             verifyCommand.handleRegisterCode(email,code)
@@ -64,10 +66,36 @@ class EmailPolicy(
                 您的验证码为：<b>${code}<b/> <br>
                 有效期三分钟，请妥善保管。<br>
                 若非本人操作，则说明您的账号可能泄漏，请立即修改密码或冻结账户。<br>
-                感谢您的信赖与使用！<br>
-                AnotherDomain团队<br>""",true)
+                <br>
+                AnotherDomain团队<br>
+                """,true)
             taskExecutor.submit{mailSender.send(helper.mimeMessage)}
             verifyCommand.handleRestPasswordCode(email,code)
+        }catch (e:Exception){
+            throw BusinessException("邮件发送错误")
+        }
+    }
+
+    fun sendMail4Cancel(email: String) {
+        try {
+            val message = mailSender.createMimeMessage()
+            val helper = MimeMessageHelper(message)
+            val code=RandomUtil.randomString(6)
+            helper.setFrom(from)
+            helper.setTo(email)
+            helper.setSubject("欢迎使用AnotherDomain")
+            helper.setText( """
+                您的邮箱正被用于注销您在AnotherDomain的账号<br>
+                本次操作的验证码为：<b>${code}<b/> <br>
+                有效期三分钟，请妥善保管。<br>
+                若非本人操作，则说明您的账号可能泄漏，请立即修改密码或冻结账户。<br>
+                <br>
+                期待与您的再次相遇！！！<br>
+                <br>
+                AnotherDomain团队
+                """,true)
+            taskExecutor.submit{mailSender.send(helper.mimeMessage)}
+            verifyCommand.handleRegisterCode(email,code)
         }catch (e:Exception){
             throw BusinessException("邮件发送错误")
         }

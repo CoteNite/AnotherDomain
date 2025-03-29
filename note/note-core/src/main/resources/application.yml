@@ -1,0 +1,5 @@
+spring:
+  config:
+    name: note
+  profiles:
+    active: dev

@@ -50,3 +50,6 @@ include("kv:kv-core")
 findProject(":kv:kv-core")?.name = "kv-core"
 include("kv:kv-api")
 findProject(":kv:kv-api")?.name = "kv-api"
+include("note")
+include("note:note-core")
+findProject(":note:note-core")?.name = "note-core"

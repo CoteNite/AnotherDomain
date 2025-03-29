@@ -31,6 +31,8 @@
             <option value="$PROJECT_DIR$/kv" />
             <option value="$PROJECT_DIR$/kv/kv-api" />
             <option value="$PROJECT_DIR$/kv/kv-core" />
+            <option value="$PROJECT_DIR$/note" />
+            <option value="$PROJECT_DIR$/note/note-core" />
             <option value="$PROJECT_DIR$/oss" />
             <option value="$PROJECT_DIR$/oss/oss-api" />
             <option value="$PROJECT_DIR$/oss/oss-core" />

@@ -6,6 +6,7 @@ import cn.cotenite.auth.command.VerifyCommand
 import cn.cotenite.auth.policy.EmailPolicy
 import cn.cotenite.auth.commons.utils.RedisKeyCreator
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
+import cn.cotenite.auth.query.UserQuery
 import cn.cotenite.user.query.UserDetailDubboCommand
 import io.seata.spring.annotation.GlobalTransactional
 import org.apache.dubbo.config.annotation.DubboReference
@@ -28,14 +29,18 @@ interface AuthService {
 
     fun sendEmail4RestPassword(email: String)
 
+    fun doCancel(userId: Long, verifyCode: String)
+
+    fun doGetCancelCode(userId: Long)
 }
 
 @Slf4j
 @Service
 class AuthServiceImpl(
     private val verifyCommand: VerifyCommand,
+    private val userQuery: UserQuery,
     private val userCommand: UserCommand,
-    private val sendUtils: EmailPolicy,
+    private val emailPolicy: EmailPolicy,
     @DubboReference(interfaceClass = UserDetailDubboCommand::class, version = "1.0")
     private val userDetailDubboCommand: UserDetailDubboCommand
 ):AuthService{
@@ -45,7 +50,7 @@ class AuthServiceImpl(
     @Transactional(rollbackFor = [Exception::class])
     override fun sendEmail4Register(email: String) {
         verifyCommand.checkExist(RedisKeyCreator.registerCodeKey(email))
-        sendUtils.sendMail4Register(email)
+        emailPolicy.sendMail4Register(email)
     }
 
     @GlobalTransactional(rollbackFor = [Exception::class])
@@ -71,7 +76,20 @@ class AuthServiceImpl(
     @Transactional(rollbackFor = [Exception::class])
     override fun sendEmail4RestPassword(email: String) {
         verifyCommand.checkExist(RedisKeyCreator.registerCodeKey(email))
-        sendUtils.sendMail4ResetPassword(email)
+        emailPolicy.sendMail4ResetPassword(email)
+    }
+
+    @Transactional(rollbackFor = [Exception::class])
+    @GlobalTransactional(rollbackFor = [Exception::class])
+    override fun doCancel(userId: Long, verifyCode: String) {
+        val user = userCommand.cancelUser(userId)
+        verifyCommand.handleCheck(RedisKeyCreator.cancelKey(user.email), verifyCode)
+        userDetailDubboCommand.deleteUserById(user.id)
+    }
+
+    override fun doGetCancelCode(userId: Long) {
+        val email = userQuery.getEmailByUserId(userId)
+        emailPolicy.sendMail4Cancel(email)
     }
 
 

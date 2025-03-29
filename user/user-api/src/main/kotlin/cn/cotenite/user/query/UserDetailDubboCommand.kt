@@ -10,5 +10,6 @@ import cn.cotenite.user.dto.UserDetailCreateDTO
 interface UserDetailDubboCommand{
 
     fun createUserDetail(userDetailCreateDTO: UserDetailCreateDTO)
+    fun deleteUserById(id: Long)
 
 }

@@ -26,4 +26,8 @@ object RedisKeyCreator : RedisKeyBase() {
     fun userPermissionHashKey(userId:Long):String {
         return PREFIX+"userPermission:${userId}"
     }
+
+    fun cancelKey(email: String): String {
+        return PREFIX+"cancel:${email}"
+    }
 }

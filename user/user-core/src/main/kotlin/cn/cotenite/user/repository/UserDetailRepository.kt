@@ -41,5 +41,11 @@ class UserDetailRepository(
         sqlClient.update(input)
     }
 
+    fun deleteUserDetailById(id: Long) {
+        sqlClient.createDelete(UserDetail::class){
+            where(table.id eq id)
+        }
+    }
+
 
 }

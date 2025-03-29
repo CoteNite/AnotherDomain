@@ -91,5 +91,22 @@ class UserRepository(
         }
     }
 
+    fun findOneUserById(id:Long): User{
+        return sqlClient.createQuery(User::class){
+            where(table.id eq id)
+            select(table)
+        }.fetchOne()
+    }
+
+    fun deleteUserById(user: User) {
+        sqlClient.deleteById(User::class,user.id)
+    }
+
+    fun getEmailByUserId(id:Long):String{
+        return sqlClient.createQuery(User::class){
+            where(table.id eq id)
+            select(table.email)
+        }.fetchOne()
+    }
 
 }

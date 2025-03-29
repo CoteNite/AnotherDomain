@@ -24,4 +24,8 @@ class UserDetailDubboCommandImpl(
         userDetailRepository.saveUserDetail4Create(userDetailSaveInput)
     }
 
+    override fun deleteUserById(id: Long) {
+        userDetailRepository.deleteUserDetailById(id)
+    }
+
 }

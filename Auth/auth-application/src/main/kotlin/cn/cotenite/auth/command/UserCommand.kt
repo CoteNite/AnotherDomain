@@ -1,6 +1,7 @@
 package cn.cotenite.auth.command
 
 import cn.cotenite.auth.commons.enums.RoleCommons
+import cn.cotenite.auth.model.domain.User
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
 import cn.cotenite.auth.model.domain.dto.dto.UserInput
 import cn.cotenite.auth.model.po.dto.UserRoleSaveInput
@@ -24,6 +25,8 @@ interface UserCommand{
     fun handleLogin(id:String,password:String)
 
     fun handleRestPassword(restPasswordInput: ResetPasswordInput)
+
+    fun cancelUser(userId: Long): User
 
 }
 
@@ -57,6 +60,13 @@ class UserCommandImpl(
            restPasswordInput.verifyCode
        )
         userRepository.updatePassword(input)
+    }
+
+    override fun cancelUser(userId: Long): User {
+        val user = userRepository.findOneUserById(userId)
+        userRepository.deleteUserById(user)
+        userRoleRepository.deleteRelationByUserId(userId)
+        return user
     }
 
 }

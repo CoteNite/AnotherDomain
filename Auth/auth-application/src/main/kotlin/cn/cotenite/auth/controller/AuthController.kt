@@ -1,7 +1,6 @@
 package cn.cotenite.auth.controller
 
 import cn.cotenite.asp.Slf4j
-import cn.cotenite.asp.Slf4j.Companion.log
 import cn.cotenite.auth.command.VerifyCommand
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
 import cn.cotenite.auth.model.dto.rep.RegisterRepDTO
@@ -10,7 +9,6 @@ import cn.cotenite.auth.service.AuthService
 import cn.cotenite.filter.LoginUserContextHolder
 import cn.cotenite.response.Response
 import cn.dev33.satoken.stp.StpUtil
-import com.alibaba.nacos.api.model.v2.ErrorCode
 import jakarta.validation.constraints.Pattern
 import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.*
@@ -79,6 +77,22 @@ class AuthController(
         return Response.success()
     }
 
+
+    @GetMapping("/getCancelCode")
+    fun getCancelCode(): Response {
+        val userId = LoginUserContextHolder.getUserId()
+        authService.doGetCancelCode(userId)
+        return Response.success()
+    }
+
+
+    @GetMapping("/cancel")
+    fun cancel(@RequestParam verifyCode:String): Response {
+        val userId = LoginUserContextHolder.getUserId()
+        StpUtil.logout(userId)
+        authService.doCancel(userId, verifyCode)
+        return Response.success()
+    }
 
 
 }
