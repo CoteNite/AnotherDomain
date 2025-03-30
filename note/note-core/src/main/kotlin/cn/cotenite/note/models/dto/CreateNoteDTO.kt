@@ -43,7 +43,7 @@ data class CreateNoteDTO(
             }
 
             VIDEO -> {
-                if (imgUris!=null&&videoUri==null){
+                if (imgUris!=null||videoUri==null){
                     throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
                 }
             }

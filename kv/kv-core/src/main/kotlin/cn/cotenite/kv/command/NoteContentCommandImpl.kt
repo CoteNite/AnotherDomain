@@ -21,7 +21,6 @@ class NoteContentCommandImpl(
     private val noteContentRepository: NoteContentRepository
 ): NoteContentCommand {
     override fun addNoteContent(content: String?):UUID{
-        content?:throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
         val randomUUID = UUID.randomUUID()
         val noteContent = NoteContent(randomUUID, content)
         noteContentRepository.insert(noteContent)

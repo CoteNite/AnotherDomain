@@ -15,5 +15,12 @@ import java.util.UUID
 data class NoteContent(
     @PrimaryKey
     val id:UUID,
-    var content:String
-)
+    val content:String?
+){
+
+    init {
+        content?:throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
+    }
+
+
+}
