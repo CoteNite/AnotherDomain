@@ -30,6 +30,7 @@ class NoteController(
 
     @PostMapping("/create")
     fun createNote(@RequestBody createNoteDTO: CreateNoteDTO) {
+        createNoteDTO.checkParam()
         noteService.createNote(createNoteDTO)
     }
 

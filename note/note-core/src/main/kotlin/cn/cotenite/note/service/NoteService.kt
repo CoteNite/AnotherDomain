@@ -1,14 +1,12 @@
 package cn.cotenite.note.service
 
 import cn.cotenite.api.command.NoteContentCommand
-import cn.cotenite.enums.Errors
-import cn.cotenite.expection.BusinessException
 import cn.cotenite.filter.LoginUserContextHolder
 import cn.cotenite.note.command.NoteCommand
 import cn.cotenite.note.command.NoteDetailCommand
-import cn.cotenite.note.common.enums.Status
 import cn.cotenite.note.common.enums.Top
 import cn.cotenite.note.common.enums.Type
+import cn.cotenite.note.common.enums.Type.*
 import cn.cotenite.note.common.enums.Visible
 import cn.cotenite.note.models.dto.CreateNoteDTO
 import cn.cotenite.note.models.dto.NoteCreateInput
@@ -41,49 +39,22 @@ class NoteServiceImpl(
     @Transactional(rollbackFor = [Exception::class])
     @GlobalTransactional(rollbackFor = [Exception::class])
     override fun createNote(createNoteDTO: CreateNoteDTO) {
-        val userId = LoginUserContextHolder.getUserId()
-        val type = Type.getTypeByCode(createNoteDTO.type)
-
         val noteCreateInput = NoteCreateInput(
-            creatorId = userId,
-            type = type,
+            creatorId = LoginUserContextHolder.getUserId(),
+            type = Type.getTypeByCode(createNoteDTO.type),
             visible = Visible.getVisibleByCode(createNoteDTO.visible),
             top = Top.getTopByCode(createNoteDTO.top)
         )
-
         val noteId = noteCommand.createNote(noteCreateInput)
-
-        val content = createNoteDTO.content
-        val videoUri = createNoteDTO.videoUri
-        val imgUris = createNoteDTO.imgUris
-
-        val noteContentId: String? = when (type) {
-            Type.TEXT -> {
-                when {
-                    (content == null && imgUris == null) ->
-                        throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
-                    else ->
-                        imgUris ?: noteContentCommand.addNoteContent(content!!).toString()
-                }
-            }
-
-            Type.VIDEO -> {
-                videoUri ?: throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
-                null
-            }
-        }
-
-
+        val noteContentId = noteContentCommand.addNoteContent(createNoteDTO.content).toString()
         val noteDetailCreateInput = NoteDetailCreateInput(
             id = noteId,
             contentUUID = noteContentId,
             title = createNoteDTO.title,
-            imgUris = imgUris,
-            videoUri = videoUri
+            imgUris = createNoteDTO.imgUris,
+            videoUri = createNoteDTO.videoUri
         )
-
         noteDetailCommand.createNoteDetail(noteDetailCreateInput)
-
     }
 
 

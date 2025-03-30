@@ -35,4 +35,5 @@ interface Note {
     @Default("UNDELETE")
     @LogicalDeleted("DELETED")
     val delete:Delete
+
 }

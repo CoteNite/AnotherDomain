@@ -2,12 +2,14 @@ package cn.cotenite.note.common.enums
 
 import cn.cotenite.enums.Errors
 import cn.cotenite.expection.BusinessException
+import org.babyfish.jimmer.sql.EnumType
 
 /**
  * @Author  RichardYoung
  * @Description
  * @Date  2025/3/30 04:10
  */
+@EnumType(EnumType.Strategy.ORDINAL)
 enum class Top(
     val code:Int
 ){

@@ -10,7 +10,7 @@ import java.util.*
  */
 interface NoteContentCommand {
 
-    fun addNoteContent(content:String): UUID
+    fun addNoteContent(content:String?): UUID
 
     fun deleteNoteContent(noteId: UUID)
 

@@ -2,6 +2,8 @@ package cn.cotenite.kv.command
 
 import cn.cotenite.api.command.NoteContentCommand
 import cn.cotenite.api.dto.UpdateNoteContentReqDTO
+import cn.cotenite.enums.Errors
+import cn.cotenite.expection.BusinessException
 import cn.cotenite.kv.model.dataobject.NoteContent
 import cn.cotenite.kv.repository.NoteContentRepository
 import org.apache.dubbo.config.annotation.DubboService
@@ -18,7 +20,8 @@ import java.util.*
 class NoteContentCommandImpl(
     private val noteContentRepository: NoteContentRepository
 ): NoteContentCommand {
-    override fun addNoteContent(content: String):UUID{
+    override fun addNoteContent(content: String?):UUID{
+        content?:throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
         val randomUUID = UUID.randomUUID()
         val noteContent = NoteContent(randomUUID, content)
         noteContentRepository.insert(noteContent)
