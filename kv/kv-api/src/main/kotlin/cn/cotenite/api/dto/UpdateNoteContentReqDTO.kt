@@ -10,5 +10,5 @@ import java.util.*
  */
 data class UpdateNoteContentReqDTO(
     val noteId: UUID,
-    val content:String
+    val content:String?
 )

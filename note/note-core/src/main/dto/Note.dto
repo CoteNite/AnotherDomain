@@ -7,3 +7,10 @@ input NoteCreateInput {
     top
     visible
 }
+
+
+input NoteUserUpdateInput {
+    id
+    top?
+    visible?
+}

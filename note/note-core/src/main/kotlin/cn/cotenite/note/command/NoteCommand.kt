@@ -1,7 +1,8 @@
 package cn.cotenite.note.command
 
 import cn.cotenite.note.models.dto.NoteCreateInput
-import cn.cotenite.note.models.dto.NoteDetailCreateInput
+import cn.cotenite.note.models.dto.NoteUserUpdateInput
+//import cn.cotenite.note.models.dto.NoteUserUpdateInput
 import cn.cotenite.note.repo.NoteRepository
 import org.springframework.stereotype.Service
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service
  */
 interface NoteCommand {
     fun createNote(noteCreateInput: NoteCreateInput):Long
+    fun updateNote(noteUserUpdateInput: NoteUserUpdateInput)
 
 }
 
@@ -22,6 +24,10 @@ class NoteCommandImpl(
 
     override fun createNote(noteCreateInput: NoteCreateInput):Long{
         return noteRepository.createNote(noteCreateInput)
+    }
+
+    override fun updateNote(noteUserUpdateInput: NoteUserUpdateInput) {
+        noteRepository.updateNoteByUserIdAnCreatorId(noteUserUpdateInput)
     }
 
 

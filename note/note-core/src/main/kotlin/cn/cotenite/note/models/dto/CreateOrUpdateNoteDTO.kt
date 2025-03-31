@@ -2,18 +2,16 @@ package cn.cotenite.note.models.dto
 
 import cn.cotenite.enums.Errors
 import cn.cotenite.expection.BusinessException
-import cn.cotenite.note.common.enums.Status
-import cn.cotenite.note.common.enums.Top
 import cn.cotenite.note.common.enums.Type
-import cn.cotenite.note.common.enums.Type.*
-import cn.cotenite.note.common.enums.Visible
+import cn.cotenite.note.common.enums.Type.TEXT
+import cn.cotenite.note.common.enums.Type.VIDEO
 
 /**
  * @Author  RichardYoung
  * @Description
  * @Date  2025/3/30 06:05
  */
-data class CreateNoteDTO(
+data class CreateOrUpdateNoteDTO(
 
     val top: Int,
 
@@ -34,10 +32,8 @@ data class CreateNoteDTO(
 
         when (type) {
 
-            TEXT -> content?: throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
-
-            ALL_PICTURE -> {
-                if (imgUris==null||videoUri!=null){
+            TEXT -> {
+                if ((imgUris!=null||content!=null)&&videoUri==null){
                     throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
                 }
             }

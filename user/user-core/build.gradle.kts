@@ -13,6 +13,8 @@ repositories {
     mavenCentral()
 }
 
+
+
 val jimmerVersion = "0.9.66"
 val mysqlConnectVersion = "8.0.30"
 val redissonVersion = "3.23.5"

@@ -2,6 +2,7 @@ package cn.cotenite.user.query
 
 import cn.cotenite.enums.Errors
 import cn.cotenite.expection.BusinessException
+import cn.cotenite.user.model.domain.dto.UserDetailSimpleView
 import cn.cotenite.user.model.domain.dto.UserDetailUpdateInput
 import cn.cotenite.user.model.domain.dto.UserDetailView
 import cn.cotenite.user.repository.UserDetailRepository
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController
  */
 interface UserDetailQuery {
     fun getUserDetailAll(): UserDetailView
+    fun getUserDetailSimpleView(userId: Long) :UserDetailSimpleView
 }
 
 @Service
@@ -31,6 +33,9 @@ class UserDetailQueryImpl(
         return userDetailRepository.getUserDetailAll(id)
     }
 
+    override fun getUserDetailSimpleView(userId: Long): UserDetailSimpleView {
+        return userDetailRepository.getUserDetailSimpleView(userId)
+    }
 
 
 }

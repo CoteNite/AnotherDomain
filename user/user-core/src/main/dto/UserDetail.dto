@@ -22,6 +22,11 @@ UserDetailView{
     webUrl
 }
 
+UserDetailSimpleView{
+    avatar,
+    nickname
+}
+
 input UserDetailUpdateInput{
     id,
     avatar,

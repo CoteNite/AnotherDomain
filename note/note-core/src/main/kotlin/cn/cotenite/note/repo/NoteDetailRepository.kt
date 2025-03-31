@@ -1,6 +1,8 @@
 package cn.cotenite.note.repo
 
 import cn.cotenite.note.models.dto.NoteDetailCreateInput
+import cn.cotenite.note.models.dto.TextNoteDetailUpdateInput
+import cn.cotenite.note.models.dto.VideoNoteDetailUpdateInput
 import org.babyfish.jimmer.sql.ast.mutation.SaveMode
 import org.babyfish.jimmer.sql.kt.KSqlClient
 import org.springframework.stereotype.Repository
@@ -18,6 +20,20 @@ class NoteDetailRepository(
         sqlClient.save(
             noteDetailCreateInput,
             SaveMode.INSERT_ONLY
+        )
+    }
+
+    fun updateTextNoteDetail(textNoteDetailUpdateInput: TextNoteDetailUpdateInput) {
+        sqlClient.save(
+            textNoteDetailUpdateInput,
+            SaveMode.UPDATE_ONLY
+        )
+    }
+
+    fun updateVideoNoteDetail(videoNoteDetailUpdateInput: VideoNoteDetailUpdateInput) {
+        sqlClient.save(
+            videoNoteDetailUpdateInput,
+            SaveMode.UPDATE_ONLY
         )
     }
 }

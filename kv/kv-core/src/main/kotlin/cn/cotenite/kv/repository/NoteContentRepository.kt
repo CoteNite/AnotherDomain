@@ -13,8 +13,9 @@ import java.util.*
  */
 interface NoteContentRepository : CassandraRepository<NoteContent, UUID> {
 
-    fun updateNoteContentById(noteId: UUID, content: String){
+    fun updateNoteContentById(noteId: UUID, content: String?){
         checkNoteContentExist(noteId)
+        this.
         save(NoteContent(noteId,content))
     }
 
@@ -39,3 +40,4 @@ interface NoteContentRepository : CassandraRepository<NoteContent, UUID> {
         }
     }
 }
+

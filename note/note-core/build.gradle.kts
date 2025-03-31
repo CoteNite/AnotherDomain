@@ -65,7 +65,14 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+
 }
 kotlin {
+    sourceSets.main {
+        kotlin.srcDir("build/generated/ksp/main/kotlin")
+    }
+    compilerOptions {
+        freeCompilerArgs.addAll("-Xjsr305=strict")
+    }
     jvmToolchain(17)
 }

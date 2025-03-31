@@ -16,16 +16,13 @@ enum class Type(
     //图文or纯文
     TEXT(0),
 
-    ALL_PICTURE(1),
-
-    VIDEO(2);
+    VIDEO(1);
 
     companion object{
         fun getTypeByCode(code:Int):Type{
             return when(code){
                 0 -> TEXT
-                1 -> ALL_PICTURE
-                2 -> VIDEO
+                1 -> VIDEO
                 else -> throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
             }
         }
