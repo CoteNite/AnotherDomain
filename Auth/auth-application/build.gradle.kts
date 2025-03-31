@@ -28,12 +28,19 @@ dependencies {
     implementation("org.springframework:spring-context-support:6.2.3")
     implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}")
+
     implementation("org.redisson:redisson-spring-boot-starter:${redissonVersion}")
+
+    implementation("com.github.ben-manes.caffeine:caffeine:3.2.0")
+
     implementation("org.babyfish.jimmer:jimmer-spring-boot-starter:${jimmerVersion}")
+
     implementation("cn.hutool:hutool-all:${hutoolVersion}")
+
     implementation("cn.dev33:sa-token-redis-jackson:${satokenVersion}")
     implementation("cn.dev33:sa-token-spring-boot3-starter:${satokenVersion}")
     implementation("org.springframework.security:spring-security-crypto:${bcryptVersion}")
+
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:4.2.0")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.3.2")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2023.0.3.2")
@@ -47,7 +54,6 @@ dependencies {
     implementation("com.alibaba.csp:sentinel-datasource-nacos:1.8.8")
     implementation("com.alibaba.csp:sentinel-web-servlet:1.8.8")
     implementation("com.alibaba.cloud:spring-cloud-alibaba-sentinel-gateway:2023.0.3.2")
-//    implementation("org.apache.rocketmq:rocketmq-spring-boot-starter:2.3.2")
 
     //seata
     implementation("org.apache.seata:seata-spring-boot-starter:2.3.0")

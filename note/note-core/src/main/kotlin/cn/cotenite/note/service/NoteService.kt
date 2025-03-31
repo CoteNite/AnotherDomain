@@ -48,6 +48,7 @@ class NoteServiceImpl(
         val noteContentId = noteContentCommand.addNoteContent(createOrUpdateNoteDTO.content).toString()
         val noteDetailCreateInput = NoteDetailCreateInput(
             id = noteId,
+            creatorId = LoginUserContextHolder.getUserId(),
             contentUUID = noteContentId,
             title = createOrUpdateNoteDTO.title,
             imgUris = createOrUpdateNoteDTO.imgUris,

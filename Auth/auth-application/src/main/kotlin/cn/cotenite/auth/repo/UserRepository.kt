@@ -4,12 +4,12 @@ package cn.cotenite.auth.repo
 import cn.cotenite.asp.Slf4j
 import cn.cotenite.auth.commons.utils.RedisKeyCreator
 import cn.cotenite.auth.model.domain.*
-
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
 import cn.cotenite.auth.model.domain.dto.dto.UserInput
 import cn.cotenite.enums.YesOrNo
-
 import cn.cotenite.expection.BusinessException
+import com.github.benmanes.caffeine.cache.Cache
+import com.github.benmanes.caffeine.cache.Caffeine
 import org.babyfish.jimmer.sql.ast.mutation.SaveMode
 import org.babyfish.jimmer.sql.exception.EmptyResultException
 import org.babyfish.jimmer.sql.exception.SaveException
@@ -19,7 +19,7 @@ import org.babyfish.jimmer.sql.kt.ast.expression.or
 import org.redisson.api.RedissonClient
 import org.springframework.stereotype.Repository
 import java.time.Duration
-import java.util.HashMap
+import java.util.concurrent.TimeUnit
 
 /**
  * @Author  RichardYoung
@@ -32,6 +32,9 @@ class UserRepository(
     private val sqlClient: KSqlClient,
     private val redisClient: RedissonClient
 ) {
+
+
+
     fun saveUser(input: UserInput):Long{
         try {
             val id = sqlClient.save(
@@ -74,7 +77,7 @@ class UserRepository(
             for ((permissionName,yesOrNo) in permissionHash){
                 map[permissionName] = yesOrNo
             }
-                map.expire(Duration.ofDays(7))
+            map.expire(Duration.ofDays(7))
             return user
         }catch (e: EmptyResultException){
             throw BusinessException("该用户不存在")

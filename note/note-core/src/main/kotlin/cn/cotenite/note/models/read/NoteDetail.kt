@@ -15,6 +15,8 @@ interface NoteDetail {
     @Id
     val id:Long
 
+    val creatorId:Long
+
     val title:String
 
     val contentUUID:String
