@@ -1,4 +1,4 @@
-package cn.cotenite.auth.config
+package cn.cotenite.gateway.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

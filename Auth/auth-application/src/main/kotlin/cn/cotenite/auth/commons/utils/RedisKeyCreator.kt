@@ -16,7 +16,7 @@ object RedisKeyCreator : RedisKeyBase() {
     }
 
     fun loginCodeKey(key:String):String {
-        return PREFIX+"login:${key}"
+        return PREFIX+"getUserInfo4login:${key}"
     }
 
     fun resetPasswordCodeKey(email:String):String {

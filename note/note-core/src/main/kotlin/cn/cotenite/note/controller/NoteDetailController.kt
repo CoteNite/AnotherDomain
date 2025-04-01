@@ -5,13 +5,12 @@ import cn.cotenite.expection.BusinessException
 import cn.cotenite.note.command.NoteDetailCommand
 import cn.cotenite.note.models.dto.TextNoteDetailUpdateInput
 import cn.cotenite.note.models.dto.VideoNoteDetailUpdateInput
+import cn.cotenite.note.query.NoteDetailQuery
 import cn.cotenite.note.service.NoteService
+import cn.cotenite.page.BasePage
 import cn.cotenite.response.Response
 import cn.hutool.core.util.StrUtil
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  * @Author  RichardYoung
@@ -21,7 +20,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/noteDetail")
 class NoteDetailController(
-    private val noteService: NoteService
+    private val noteService: NoteService,
+    private val noteDetailQuery: NoteDetailQuery
 ){
 
     @PostMapping("/updateVideoNote")
@@ -41,5 +41,24 @@ class NoteDetailController(
         }
         noteService.updateTextNoteDetail(textNoteDetailUpdateInput)
         return Response.success()
+    }
+
+    @PostMapping("/findNoteDetailViewList")
+    fun findNoteDetailViewList(@RequestBody page: BasePage): Response {
+        val noteDetailViewList = noteDetailQuery.findNoteDetailViewList(page)
+        return Response.success(noteDetailViewList)
+    }
+
+
+    @GetMapping("/textNoteDetailInfo/{id}")
+    fun getTextNoteDetailInfo(@PathVariable id: Long): Response {
+        val textNoteDetailInfo = noteDetailQuery.findTextNoteDetailInfo(id)
+        return Response.success(textNoteDetailInfo)
+    }
+
+    @GetMapping("/videoNoteDetailInfo/{id}")
+    fun getVideoNoteDetailInfo(@PathVariable id: Long): Response {
+        val videoNoteDetailInfo = noteDetailQuery.findVideoNoteDetailInfo(id)
+        return Response.success(videoNoteDetailInfo)
     }
 }

@@ -27,3 +27,31 @@ input VideoNoteDetailUpdateInput {
     content:String?
     videoUri?
 }
+
+NoteDetailTextInfo{
+    id
+    creatorId
+    title
+    contentUUID
+    content:String?
+    imgUris
+    updateTime
+}
+
+NoteDetailVideoInfo{
+    id
+    creatorId
+    title
+    contentUUID
+    content:String?
+    videoUri
+    updateTime
+}
+
+NoteViewItem{
+    id,
+    creatorId,
+    title,
+    updateTime,
+    contentUUID
+}

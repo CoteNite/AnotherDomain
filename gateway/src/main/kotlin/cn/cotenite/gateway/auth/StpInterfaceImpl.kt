@@ -7,7 +7,10 @@ import cn.cotenite.gateway.commons.utils.RedisKeyCreator
 import cn.dev33.satoken.stp.StpInterface
 import com.github.benmanes.caffeine.cache.Caffeine
 import org.redisson.api.RedissonClient
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import org.springframework.stereotype.Component
+import java.util.concurrent.ScheduledThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
 /**
@@ -18,7 +21,8 @@ import java.util.concurrent.TimeUnit
 @Component
 @Slf4j
 class StpInterfaceImpl(
-    val redissonClient: RedissonClient
+    val redissonClient: RedissonClient,
+    @Qualifier("taskExecutor") val threadPoolTaskExecutor: ThreadPoolTaskExecutor
 ):StpInterface{
 
     companion object{
@@ -41,7 +45,9 @@ class StpInterfaceImpl(
             val userPermissionHashKey = RedisKeyCreator.userPermissionHashKey(userId)
             val rMap = redissonClient.getMap<String, Int>(userPermissionHashKey)
             map = rMap.toMutableMap()
-            LOCAL_CACHE.put(userId,map)
+            threadPoolTaskExecutor.submit{
+                LOCAL_CACHE.put(userId,map)
+            }
         }
 
         map.filter { (_,yesOrNo) ->

@@ -49,7 +49,7 @@ class UserCommandImpl(
     }
 
     override fun handleLogin(id: String, password: String){
-        val user=userRepository.login(id)
+        val user=userRepository.getUserInfo4login(id)
         user.login(password)
     }
 

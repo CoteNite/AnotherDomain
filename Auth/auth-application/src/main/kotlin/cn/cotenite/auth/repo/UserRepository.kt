@@ -6,10 +6,10 @@ import cn.cotenite.auth.commons.utils.RedisKeyCreator
 import cn.cotenite.auth.model.domain.*
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
 import cn.cotenite.auth.model.domain.dto.dto.UserInput
+import cn.cotenite.enums.Errors
 import cn.cotenite.enums.YesOrNo
 import cn.cotenite.expection.BusinessException
-import com.github.benmanes.caffeine.cache.Cache
-import com.github.benmanes.caffeine.cache.Caffeine
+import cn.hutool.core.util.RandomUtil
 import org.babyfish.jimmer.sql.ast.mutation.SaveMode
 import org.babyfish.jimmer.sql.exception.EmptyResultException
 import org.babyfish.jimmer.sql.exception.SaveException
@@ -17,9 +17,10 @@ import org.babyfish.jimmer.sql.kt.KSqlClient
 import org.babyfish.jimmer.sql.kt.ast.expression.eq
 import org.babyfish.jimmer.sql.kt.ast.expression.or
 import org.redisson.api.RedissonClient
+import org.springframework.beans.factory.annotation.Qualifier
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import org.springframework.stereotype.Repository
 import java.time.Duration
-import java.util.concurrent.TimeUnit
 
 /**
  * @Author  RichardYoung
@@ -30,7 +31,8 @@ import java.util.concurrent.TimeUnit
 @Repository
 class UserRepository(
     private val sqlClient: KSqlClient,
-    private val redisClient: RedissonClient
+    private val redisClient: RedissonClient,
+    @Qualifier("taskExecutor") private val threadPoolTaskExecutor: ThreadPoolTaskExecutor
 ) {
 
 
@@ -49,9 +51,14 @@ class UserRepository(
         }
     }
 
-    fun login(id: String): User {
+    fun getUserInfo4login(id: String): User {
         try {
-            val user = sqlClient
+            val bucket = redisClient.getBucket<User?>(id)
+            var user=bucket.get()
+            if (user!=null){
+                return user
+            }
+            user = sqlClient
                 .createQuery(User::class) {
                     where(or(
                         table.email eq id,
@@ -66,7 +73,12 @@ class UserRepository(
                         }
                     })
                 }
-                .fetchOne()
+                .fetchOneOrNull()
+            if (user==null){
+                bucket.set(null)
+                bucket.expire(Duration.ofSeconds((60+RandomUtil.randomInt(60)).toLong()))
+                throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
+            }
             val permissionHash = HashMap<String,Int>()
             for (role in user.roles){
                 for (permission in role.permissions){
@@ -78,6 +90,9 @@ class UserRepository(
                 map[permissionName] = yesOrNo
             }
             map.expire(Duration.ofDays(7))
+            threadPoolTaskExecutor.submit {
+                bucket.set(user)
+            }
             return user
         }catch (e: EmptyResultException){
             throw BusinessException("该用户不存在")
