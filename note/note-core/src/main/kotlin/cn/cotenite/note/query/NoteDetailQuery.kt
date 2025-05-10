@@ -7,8 +7,10 @@ import cn.cotenite.note.models.dto.NoteDetailVideoInfo
 import cn.cotenite.note.models.dto.NoteViewItem
 import cn.cotenite.note.repo.NoteDetailRepository
 import cn.cotenite.page.BasePage
+import cn.cotenite.utils.UserIdContextHolder
 import org.apache.dubbo.config.annotation.DubboReference
 import org.babyfish.jimmer.Page
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import org.springframework.stereotype.Service
 import java.util.UUID
 
@@ -29,12 +31,17 @@ interface NoteDetailQuery {
 class NoteDetailQueryImpl(
     private val noteDetailRepository: NoteDetailRepository,
     @DubboReference(interfaceClass = NoteContentCommand::class,version = "1.0")
-    private val noteContentQuery: NoteContentQuery
+    private val noteContentQuery: NoteContentQuery,
+    private val taskExecutor: ThreadPoolTaskExecutor
 ) : NoteDetailQuery{
 
     override fun findTextNoteDetailInfo(noteId: Long): NoteDetailTextInfo {
+
+
+
         var noteDetail = noteDetailRepository.findTextNoteDetailInfoById(noteId)
         val content = noteContentQuery.queryNoteContent(UUID.fromString(noteDetail.contentUUID))
+
         noteDetail = NoteDetailTextInfo(
             id = noteDetail.id,
             creatorId = noteDetail.creatorId,

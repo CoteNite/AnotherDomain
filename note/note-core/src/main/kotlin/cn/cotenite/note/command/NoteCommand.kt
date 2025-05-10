@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service
 interface NoteCommand {
     fun createNote(noteCreateInput: NoteCreateInput):Long
     fun updateNote(noteUserUpdateInput: NoteUserUpdateInput)
-
 }
 
 @Service

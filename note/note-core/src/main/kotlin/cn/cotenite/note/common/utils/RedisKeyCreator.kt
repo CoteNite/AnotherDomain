@@ -1,4 +1,4 @@
-package cn.cotenite.auth.commons.utils
+package cn.cotenite.note.common.utils
 
 import cn.cotenite.utils.RedisKeyBase
 
@@ -9,25 +9,10 @@ import cn.cotenite.utils.RedisKeyBase
  */
 object RedisKeyCreator : RedisKeyBase() {
 
-    private val PREFIX = BASE_KEY+"auth:"
+    private val PREFIX = BASE_KEY+"note:"
 
-    fun registerCodeKey(email:String):String {
-        return PREFIX+"register:${email}"
+    fun buildNoteDetailKey(noteId:Long):String {
+        return PREFIX +"detail:${noteId}"
     }
 
-    fun loginCodeKey(key:String):String {
-        return PREFIX+"login:${key}"
-    }
-
-    fun resetPasswordCodeKey(email:String):String {
-        return PREFIX+"resetPassword:${email}"
-    }
-
-    fun userPermissionHashKey(userId:Long):String {
-        return PREFIX+"userPermission:${userId}"
-    }
-
-    fun cancelKey(email: String): String {
-        return PREFIX+"cancel:${email}"
-    }
 }

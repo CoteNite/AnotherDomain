@@ -1,15 +1,22 @@
 package cn.cotenite.note.repo
 
+import cn.cotenite.enums.Errors
+import cn.cotenite.expection.BusinessException
+import cn.cotenite.note.common.utils.RedisKeyCreator
 import cn.cotenite.note.models.dto.*
 import cn.cotenite.note.models.read.*
+import cn.hutool.core.util.RandomUtil
 import org.babyfish.jimmer.Page
 import org.babyfish.jimmer.sql.ast.mutation.SaveMode
-import org.babyfish.jimmer.sql.ast.tuple.Tuple5
 import org.babyfish.jimmer.sql.kt.KSqlClient
 import org.babyfish.jimmer.sql.kt.ast.expression.desc
 import org.babyfish.jimmer.sql.kt.ast.expression.eq
+import org.springframework.boot.autoconfigure.cache.CacheProperties
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import org.springframework.stereotype.Repository
-import java.time.LocalTime
+import java.time.Duration
+import java.util.concurrent.TimeUnit
+
 
 /**
  * @Author  RichardYoung
@@ -18,8 +25,19 @@ import java.time.LocalTime
  */
 @Repository
 class NoteDetailRepository(
-    private val sqlClient: KSqlClient
+    private val sqlClient: KSqlClient,
+    private val redissonClient: RedissonClient,
+    private val taskExecutor: ThreadPoolTaskExecutor
 ){
+
+    companion object{
+        private val LOCAL_CACHE= CacheProperties.Caffeine.newBuilder()
+            .initialCapacity(10000)
+            .maximumSize(10000)
+            .expireAfterWrite(1, TimeUnit.HOURS)
+            .build<Long,NoteDetailTextInfo>()
+    }
+
     fun createNoteDetail(noteDetailCreateInput: NoteDetailCreateInput) {
         sqlClient.save(
             noteDetailCreateInput,
@@ -64,14 +82,43 @@ class NoteDetailRepository(
     }
 
     fun findTextNoteDetailInfoById(noteId: Long): NoteDetailTextInfo {
-        return sqlClient.createQuery(NoteDetail::class) {
-            where(
-                table.id eq noteId
-            )
-            select(
-                table.fetch(NoteDetailTextInfo::class)
-            )
-        }.fetchOne()
+
+        val key = RedisKeyCreator.buildNoteDetailKey(noteId)
+
+        var noteDetailTextInfo:NoteDetailTextInfo?
+
+        val bucket = redissonClient.getBucket<NoteDetailTextInfo>(key)
+
+        noteDetailTextInfo=LOCAL_CACHE.getIfPresent(noteId)
+
+        if (noteDetailTextInfo!=null){
+            return noteDetailTextInfo
+        }
+
+        if (bucket.isExists) {
+            return bucket.get()
+        }
+
+        try {
+            noteDetailTextInfo=sqlClient.createQuery(NoteDetail::class) {
+                where(
+                    table.id eq noteId
+                )
+                select(
+                    table.fetch(NoteDetailTextInfo::class)
+                )
+            }.fetchOne()
+        }catch (e:Exception){
+            throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
+        }
+
+        taskExecutor.execute {
+            LOCAL_CACHE.put(noteId,noteDetailTextInfo)
+            bucket.set(noteDetailTextInfo)
+            bucket.expire(Duration.ofSeconds(60+RandomUtil.randomLong(60)))
+        }
+
+        return noteDetailTextInfo
     }
 
     fun findVideoNoteDetailInfoById(noteId:Long): NoteDetailVideoInfo {
