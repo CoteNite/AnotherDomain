@@ -39,7 +39,6 @@ dependencies {
     implementation("org.apache.dubbo:dubbo:3.3.4")
     implementation("org.apache.dubbo:dubbo-spring-boot-starter:3.3.4")
 
-//    implementation("org.apache.rocketmq:rocketmq-spring-boot-starter:2.3.2")
 
     //seata
     implementation("org.apache.seata:seata-spring-boot-starter:2.3.0")
@@ -48,8 +47,8 @@ dependencies {
     //项目间依赖管理
     implementation(project(":commons"))
     implementation(project(":id-generator:id-generator-api"))
-    implementation(project(":kv:kv-api"))
     implementation(project(":ratelimter"))
+    implementation("org.springframework.boot:spring-boot-starter-data-cassandra")
 
 
     runtimeOnly("mysql:mysql-connector-java:${mysqlConnectVersion}")
@@ -65,7 +64,6 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
-
 }
 kotlin {
     sourceSets.main {

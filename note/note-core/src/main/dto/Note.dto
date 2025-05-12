@@ -1,16 +1,15 @@
-export cn.cotenite.note.models.domain.Note
-    -> package cn.cotenite.note.models.dto
+export cn.cotenite.note.model.entity.Note
+    -> package cn.cotenite.note.model.entity.dto
 
-input NoteCreateInput {
+input NoteAddInput {
     creatorId
-    type
     top
+    type
     visible
+    title
+    tag
+    contentUuid
+    imgUris
+    videoUri
 }
 
-
-input NoteUserUpdateInput {
-    id
-    top?
-    visible?
-}

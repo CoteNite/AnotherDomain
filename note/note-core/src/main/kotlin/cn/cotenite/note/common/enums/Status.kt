@@ -1,36 +1,20 @@
 package cn.cotenite.note.common.enums
 
-import cn.cotenite.enums.Errors
-import cn.cotenite.expection.BusinessException
+import cn.cotenite.enums.CodeEnum
 import org.babyfish.jimmer.sql.EnumType
 
 /**
  * @Author  RichardYoung
  * @Description
- * @Date  2025/3/30 02:43
+ * @Date  2025/5/13 05:48
  */
 @EnumType(EnumType.Strategy.ORDINAL)
 enum class Status(
-    val code:Int
-){
-    //审核
-    REVIEW(0),
-    //展示
-    SHOW(1),
-    //下架
-    SHUT_DOWN(2);
+    override val code: Int
+): CodeEnum {
 
-    companion object{
-
-        fun getStatusByCode(code:Int):Status{
-            return when(code){
-                0 -> REVIEW
-                1 -> SHOW
-                2 -> SHUT_DOWN
-                else -> throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
-            }
-        }
-    }
-
+    REVIEWING(0),
+    REVIEWED(1),
+    FAILED(2)
 
 }

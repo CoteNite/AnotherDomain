@@ -1,4 +1,4 @@
-package cn.cotenite.auth.commons.utils
+package cn.cotenite.note.common.utils
 
 import cn.cotenite.expection.BusinessException
 import cn.cotenite.id.api.IdGeneratorService
@@ -9,20 +9,20 @@ import org.springframework.stereotype.Component
 /**
  * @Author  RichardYoung
  * @Description
- * @Date  2025/3/19 06:59
+ * @Date  2025/5/13 05:40
  */
 @Component
 class SnowflakeIdGenerator(
     @DubboReference(interfaceClass = IdGeneratorService::class, version = "1.0")
     private val idGeneratorService: IdGeneratorService
-):UserIdGenerator<Long>{
+): UserIdGenerator<Long> {
     override fun generate(entityType: Class<*>?): Long {
-        val id=idGeneratorService.getSegmentId("another-domain-segment-note-id")?:throw BusinessException("获取id失败")
+        val id=idGeneratorService.getSegmentId("another-domain-segment-user-id")?:throw BusinessException("获取id失败")
         return id.toLong()
     }
 
     fun getId(): Long {
-        val id=idGeneratorService.getSegmentId("another-domain-segment-note-id")?:throw BusinessException("获取id失败")
+        val id=idGeneratorService.getSegmentId("another-domain-segment-user-id")?:throw BusinessException("获取id失败")
         return id.toLong()
     }
 

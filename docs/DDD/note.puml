@@ -1,0 +1,60 @@
+@startuml
+
+!include components.puml
+
+skinparam dpi 800
+
+Person(user)[
+    用户
+]
+
+Command(add)[
+    发布文章
+    --field--
+    creatorId
+    top
+    type
+    visible
+    tag?
+    tittle
+    content?
+    image_uris?
+    video_uri?
+    --rules--
+    1.图文和视频都是content和uri有一个即可
+    2.image_uris和video_uri只能选一个
+    3.image_uris为Json数组的格式，存储图片的uri，一个帖子最多十张图片
+]
+
+Aggregate(note)[
+    文章聚合
+    --id--
+      id
+    --filed--
+      creatorId
+      top
+      type
+      status
+      visible
+      tag?
+      tittle
+      contentUuid?
+      content?
+      image_uris?
+      video_uri?
+]
+
+Event(added)[
+    文章已发布
+]
+
+Policy(Operation)[
+    消息队列发布到运营系统进行审核
+]
+
+user -down-> add
+add -down-> note
+note -down-> added
+added -down-> Operation
+
+@enduml

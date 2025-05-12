@@ -1,5 +1,0 @@
-spring:
-  config:
-    name: kv
-  profiles:
-    active: dev

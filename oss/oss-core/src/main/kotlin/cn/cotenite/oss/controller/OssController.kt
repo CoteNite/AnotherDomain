@@ -19,10 +19,15 @@ class OssController(
     private val minioFileService: MinioFileService
 ){
 
-
     @GetMapping("/uploadAvatar")
     fun uploadAvatar(file:MultipartFile,id:Long):Response {
-        val url = minioFileService.uploadFile(file, "id/avatar")
+        val url = minioFileService.uploadFile(file, "${id}/avatar")
+        return Response.success(url)
+    }
+
+    @GetMapping("/uploadNotePicture")
+    fun uploadNotePicture(file:MultipartFile,noteId:Long):Response {
+        val url = minioFileService.uploadFile(file, "${noteId}/image")
         return Response.success(url)
     }
 
