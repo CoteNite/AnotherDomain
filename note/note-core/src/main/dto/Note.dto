@@ -13,3 +13,32 @@ input NoteAddInput {
     videoUri
 }
 
+
+input ImageNoteUpdateInput {
+    id
+    creatorId
+    top
+    visible
+    title
+    tag
+    contentUuid
+    imgUris
+}
+
+input VideoNoteUpdateInput {
+    id
+    creatorId
+    top
+    visible
+    title
+    tag
+    contentUuid
+    videoUri
+}
+
+DeleteNoteView{
+    id
+    creatorId
+    contentUuid
+}
+
