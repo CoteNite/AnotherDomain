@@ -1,14 +1,15 @@
 package cn.cotenite.note.repository.database
 
+import cn.cotenite.enums.Errors
+import cn.cotenite.expection.BusinessException
 import cn.cotenite.note.model.entity.*
-import cn.cotenite.note.model.entity.dto.DeleteNoteView
 import cn.cotenite.note.model.entity.dto.ImageNoteUpdateInput
 import cn.cotenite.note.model.entity.dto.NoteAddInput
 import cn.cotenite.note.model.entity.dto.VideoNoteUpdateInput
-import org.babyfish.jimmer.sql.ast.mutation.AssociatedSaveMode
 import org.babyfish.jimmer.sql.ast.mutation.SaveMode
 import org.babyfish.jimmer.sql.kt.KSqlClient
 import org.babyfish.jimmer.sql.kt.ast.expression.eq
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import org.springframework.stereotype.Repository
 
 /**
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Repository
 @Repository
 class NoteRepository(
     private val sqlClient: KSqlClient,
+    private val taskExecutor: ThreadPoolTaskExecutor
 ){
 
     fun insertNote(input: NoteAddInput) {
@@ -94,17 +96,34 @@ class NoteRepository(
         }.execute()
     }
 
-    fun selectOneById(id: Long): DeleteNoteView {
+    fun selectOneById(id: Long): Note {
         return sqlClient.createQuery(Note::class){
             where(table.id eq id)
             select(
-                table.fetch(DeleteNoteView::class)
+                table
             )
         }.fetchOne()
     }
 
-    fun deleteNote(id: Long) {
-        sqlClient.deleteById(Note::class,id)
+    fun deleteNoteWithCreatorId(id:Long,creatorId:Long): String{
+        val contentId = sqlClient.createQuery(Note::class) {
+            where(
+                table.id eq id,
+                table.creatorId eq creatorId
+            )
+            select(table.contentUuid)
+        }.fetchOne()
+        if (contentId!=null){
+            taskExecutor.execute{
+                sqlClient.createDelete(Note::class) {
+                    where(table.id eq id)
+                    where(table.creatorId eq creatorId)
+                }.execute()
+            }
+            return contentId
+        }
+        throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
     }
+
 
 }

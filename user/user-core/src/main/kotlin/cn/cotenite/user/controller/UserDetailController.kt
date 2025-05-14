@@ -26,8 +26,8 @@ class UserDetailController(
     private val userDetailCommand: UserDetailCommand
 ){
 
-    @GetMapping("/getAll")
-    fun getAll(): UserDetailView {
+    @GetMapping("/getAllUser")
+    fun getAllUser(): UserDetailView {
         return userDetailQuery.getUserDetailAll()
     }
 

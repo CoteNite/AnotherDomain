@@ -36,9 +36,17 @@ input VideoNoteUpdateInput {
     videoUri
 }
 
-DeleteNoteView{
+NoteDetailView{
     id
     creatorId
-    contentUuid
+    top
+    type
+    status
+    visible
+    title
+    tag
+    content:String?
+    imgUris
+    videoUri
+    updateTime
 }
-

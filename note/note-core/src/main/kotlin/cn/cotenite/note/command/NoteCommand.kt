@@ -90,12 +90,8 @@ class NoteCommandImpl(
 
     override fun deleteNote(id: Long) {
         val userId = UserIdContextHolder.getId()
-        val deleteNoteView = noteRepository.selectOneById(id)
-        if (deleteNoteView.creatorId != userId) throw BusinessException(Errors.PARAM_VALIDATION_ERROR)
-        noteRepository.deleteNote(id)
-        deleteNoteView.contentUuid?.let {
-            noteContentRepository.deleteById(UUID.fromString(it))
-        }
+        val contentId = noteRepository.deleteNoteWithCreatorId(id, userId)
+        noteContentRepository.deleteById(UUID.fromString(contentId))
     }
 
     private fun updateNoteContent(contentUuid:String?,content:String?):String?{

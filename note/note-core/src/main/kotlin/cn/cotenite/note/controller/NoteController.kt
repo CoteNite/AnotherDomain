@@ -4,12 +4,10 @@ import cn.cotenite.note.command.NoteCommand
 import cn.cotenite.note.model.request.ImageNoteUpdateRequest
 import cn.cotenite.note.model.request.NoteAddRequest
 import cn.cotenite.note.model.request.VideoNoteUpdateRequest
+import cn.cotenite.note.query.NoteQuery
 import cn.cotenite.response.Response
 import org.springframework.validation.annotation.Validated
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  * @Author  RichardYoung
@@ -19,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/note")
 class NoteController(
-    private val noteCommand: NoteCommand
+    private val noteCommand: NoteCommand,
+    private val noteQuery: NoteQuery
 ){
 
     @PostMapping("/addNote")
@@ -45,6 +44,12 @@ class NoteController(
     fun deleteNote(@RequestBody id:Long):Response{
         noteCommand.deleteNote(id)
         return Response.success()
+    }
+
+    @GetMapping("/{id}")
+    fun findNoteViewList(@PathVariable id:Long):Response{
+        val noteDetailView = noteQuery.find4DetailById(id)
+        return Response.success(noteDetailView)
     }
 
 }
