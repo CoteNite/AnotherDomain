@@ -1,9 +1,7 @@
 package cn.cotenite.user.command
 
-import cn.cotenite.enums.Errors
-import cn.cotenite.expection.BusinessException
 import cn.cotenite.user.model.domain.dto.UserDetailUpdateInput
-import cn.cotenite.user.repository.UserDetailRepository
+import cn.cotenite.user.repository.database.UserDetailRepository
 import cn.cotenite.utils.UserIdContextHolder
 import org.springframework.stereotype.Service
 

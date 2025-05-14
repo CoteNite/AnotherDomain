@@ -12,7 +12,7 @@ object RedisKeyCreator : RedisKeyBase() {
     private val PREFIX = "$BASE_KEY:note:"
 
     fun noteDetailCacheKey(id:Long): String {
-        return "${PREFIX}detail:"
+        return "${PREFIX}detail:${id}"
     }
 
 

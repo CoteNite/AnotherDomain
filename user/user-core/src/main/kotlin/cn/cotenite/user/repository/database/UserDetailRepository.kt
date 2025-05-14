@@ -1,4 +1,4 @@
-package cn.cotenite.user.repository
+package cn.cotenite.user.repository.database
 
 import cn.cotenite.user.model.domain.UserDetail
 import cn.cotenite.user.model.domain.dto.UserDetailSaveInput

@@ -23,6 +23,7 @@ UserDetailView{
 }
 
 UserDetailSimpleView{
+    id,
     avatar,
     nickname
 }

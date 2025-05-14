@@ -1,17 +1,12 @@
 package cn.cotenite.user.query
 
-import cn.cotenite.enums.Errors
-import cn.cotenite.expection.BusinessException
 import cn.cotenite.user.model.domain.dto.UserDetailSimpleView
-import cn.cotenite.user.model.domain.dto.UserDetailUpdateInput
 import cn.cotenite.user.model.domain.dto.UserDetailView
-import cn.cotenite.user.repository.UserDetailRepository
+import cn.cotenite.user.repository.cache.UserDetailViewCacheRepository
+import cn.cotenite.user.repository.database.UserDetailRepository
 import cn.cotenite.utils.UserIdContextHolder
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import org.springframework.stereotype.Service
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
 
 /**
  * @Author  RichardYoung
@@ -25,7 +20,9 @@ interface UserDetailQuery {
 
 @Service
 class UserDetailQueryImpl(
-    private val userDetailRepository: UserDetailRepository
+    private val userDetailRepository: UserDetailRepository,
+    private val userDetailViewCacheRepository: UserDetailViewCacheRepository,
+    private val threadPoolTaskExecutor: ThreadPoolTaskExecutor
 ):UserDetailQuery{
 
     override fun getUserDetailAll(): UserDetailView {
@@ -34,7 +31,14 @@ class UserDetailQueryImpl(
     }
 
     override fun getUserDetailSimpleView(userId: Long): UserDetailSimpleView {
-        return userDetailRepository.getUserDetailSimpleView(userId)
+        var view = userDetailViewCacheRepository.getUserDetailSimpleView(userId)
+        if (view==null){
+            view = userDetailRepository.getUserDetailSimpleView(userId)
+            threadPoolTaskExecutor.execute {
+                userDetailViewCacheRepository.addUserDetailSimple2Cache(view)
+            }
+        }
+        return view
     }
 
 
