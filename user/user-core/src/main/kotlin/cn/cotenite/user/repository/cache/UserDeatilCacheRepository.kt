@@ -55,5 +55,11 @@ class UserDetailViewCacheRepository(
         LOCAL_CACHE.put(view.id,view)
     }
 
+    fun deleteUserDetailCache(id:Long){
+        val key = RedisKeyCreator.buildNoteDetailSimpleViewKey(id)
+        val bucket = redissonClient.getBucket<UserDetailSimpleView>(key)
+        bucket.delete()
+        LOCAL_CACHE.invalidate(id)
+    }
 
 }

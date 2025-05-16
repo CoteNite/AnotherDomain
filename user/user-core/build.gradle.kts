@@ -33,7 +33,7 @@ dependencies {
     implementation("org.babyfish.jimmer:jimmer-spring-boot-starter:${jimmerVersion}")
     implementation("cn.hutool:hutool-all:${hutoolVersion}")
     implementation("org.springframework.boot:spring-boot-starter-validation")
-//    implementation("org.apache.rocketmq:rocketmq-spring-boot-starter:2.3.2")
+    implementation("org.apache.rocketmq:rocketmq-spring-boot-starter:2.3.2")
 
     implementation("org.apache.dubbo:dubbo:3.3.4")
     implementation("org.apache.dubbo:dubbo-spring-boot-starter:3.3.4")
