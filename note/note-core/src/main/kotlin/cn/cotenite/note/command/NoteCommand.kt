@@ -1,6 +1,9 @@
 package cn.cotenite.note.command
 
+import cn.cotenite.asp.Slf4j
+import cn.cotenite.asp.Slf4j.Companion.log
 import cn.cotenite.enums.getEntityByCode
+import cn.cotenite.note.common.constants.MQConstants
 import cn.cotenite.note.common.enums.Top
 import cn.cotenite.note.common.enums.Type
 import cn.cotenite.note.common.enums.Visible
@@ -11,10 +14,16 @@ import cn.cotenite.note.model.entity.dto.VideoNoteUpdateInput
 import cn.cotenite.note.model.request.ImageNoteUpdateRequest
 import cn.cotenite.note.model.request.NoteAddRequest
 import cn.cotenite.note.model.request.VideoNoteUpdateRequest
+import cn.cotenite.note.producer.CacheDeleteProducer
 import cn.cotenite.note.repository.cache.NoteAggCacheRepository
 import cn.cotenite.note.repository.cassandra.NoteContentRepository
 import cn.cotenite.note.repository.database.NoteRepository
 import cn.cotenite.utils.UserIdContextHolder
+import org.apache.rocketmq.client.producer.SendCallback
+import org.apache.rocketmq.client.producer.SendResult
+import org.apache.rocketmq.spring.core.RocketMQTemplate
+import org.springframework.messaging.Message
+import org.springframework.messaging.support.MessageBuilder
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -32,12 +41,13 @@ interface NoteCommand {
     fun deleteNote(id: Long)
 }
 
+@Slf4j
 @Service
 class NoteCommandImpl(
     private val noteRepository: NoteRepository,
     private val noteAggCacheRepository: NoteAggCacheRepository,
     private val noteContentRepository: NoteContentRepository,
-    private val threadPoolTaskExecutor: ThreadPoolTaskExecutor
+    private val cacheDeleteProducer: CacheDeleteProducer
 ): NoteCommand {
 
     @Transactional(rollbackFor = [Exception::class])
@@ -58,13 +68,14 @@ class NoteCommandImpl(
             imgUris = request.imgUris,
             videoUri = request.videoUri
         )
+
         noteRepository.insertNote(input)
     }
 
     @Transactional(rollbackFor = [Exception::class])
     override fun updateImageNote(request: ImageNoteUpdateRequest) {
         val contentUuidForNoteUpdate= noteContentRepository.updateNoteContent(request.contentUuid,request.content)
-
+        noteAggCacheRepository.deleteCache(request.id)
         val input = ImageNoteUpdateInput(
             id = request.id,
             creatorId = UserIdContextHolder.getId(),
@@ -75,15 +86,14 @@ class NoteCommandImpl(
             top = getEntityByCode<Top>(request.top),
             visible = getEntityByCode<Visible>(request.visible)
         )
-        threadPoolTaskExecutor.execute {
-            noteAggCacheRepository.deleteCache(request.id)
-        }
+        cacheDeleteProducer.deleteNoteCache(request.id.toString())
         noteRepository.updateImageNote(input)
     }
 
     @Transactional(rollbackFor = [Exception::class])
     override fun updateVideoNote(request: VideoNoteUpdateRequest) {
         val contentUuidForNoteUpdate= noteContentRepository.updateNoteContent(request.contentUuid,request.content)
+        noteAggCacheRepository.deleteCache(request.id)
         val input = VideoNoteUpdateInput(
             id = request.id,
             creatorId = UserIdContextHolder.getId(),
@@ -94,20 +104,17 @@ class NoteCommandImpl(
             top = getEntityByCode<Top>(request.top),
             visible = getEntityByCode<Visible>(request.visible)
         )
-        threadPoolTaskExecutor.execute {
-            noteAggCacheRepository.deleteCache(request.id)
-        }
+        cacheDeleteProducer.deleteNoteCache(request.id.toString())
         noteRepository.updateVideoNote(input)
     }
 
     @Transactional(rollbackFor = [Exception::class])
     override fun deleteNote(id: Long) {
         val userId = UserIdContextHolder.getId()
+        noteAggCacheRepository.deleteCache(id)
         val contentId = noteRepository.deleteNoteWithCreatorId(id, userId)
-        threadPoolTaskExecutor.execute {
-            noteAggCacheRepository.deleteCache(id)
-        }
         noteContentRepository.deleteById(UUID.fromString(contentId))
+        cacheDeleteProducer.deleteNoteCache(id.toString())
     }
 
 

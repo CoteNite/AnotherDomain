@@ -7,6 +7,6 @@ package cn.cotenite.note.common.constants
  */
 object MQConstants {
 
-    val TOPIC_DELAY_DELETE_REDIS_CACHE="DelayDeleteNoteRedisCacheTopic"
+    const val TOPIC_DELAY_DELETE_REDIS_CACHE="DelayDeleteNoteRedisCacheTopic"
 
 }

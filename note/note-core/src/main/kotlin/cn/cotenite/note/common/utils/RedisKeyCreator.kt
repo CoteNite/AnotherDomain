@@ -9,6 +9,7 @@ import cn.cotenite.utils.RedisKeyBase
  */
 object RedisKeyCreator : RedisKeyBase() {
 
+
     private val PREFIX = "$BASE_KEY:note:"
 
     fun noteDetailCacheKey(id:Long): String {
