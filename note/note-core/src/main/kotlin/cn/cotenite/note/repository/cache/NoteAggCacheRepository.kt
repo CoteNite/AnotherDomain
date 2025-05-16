@@ -83,5 +83,10 @@ class NoteAggCacheRepository(
         bucket.set(agg, Duration.ofHours(1).plusSeconds(RandomUtil.randomLong(60)))
     }
 
+    fun deleteCache(id:Long){
+        LOCAL_CACHE.invalidate(id)
+        redissonClient.getBucket<NoteAgg>(RedisKeyCreator.noteDetailCacheKey(id)).delete()
+    }
+
 
 }

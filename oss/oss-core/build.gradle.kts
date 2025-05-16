@@ -1,3 +1,5 @@
+import io.spring.gradle.dependencymanagement.dsl.DependencyManagementExtension
+
 plugins {
     kotlin("jvm")
     kotlin("plugin.spring") version "1.9.20"

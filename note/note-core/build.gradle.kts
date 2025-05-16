@@ -39,6 +39,7 @@ dependencies {
     implementation("org.apache.dubbo:dubbo:3.3.4")
     implementation("org.apache.dubbo:dubbo-spring-boot-starter:3.3.4")
 
+    implementation("org.apache.rocketmq:rocketmq-spring-boot-starter:2.3.3")
 
     //seata
     implementation("org.apache.seata:seata-spring-boot-starter:2.3.0")

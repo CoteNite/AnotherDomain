@@ -22,7 +22,6 @@ plugins {
 }
 
 
-
 rootProject.name = "AnotherDomain"
 include("commons")
 include("Auth")
