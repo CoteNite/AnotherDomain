@@ -2,7 +2,7 @@ package cn.cotenite.user.repository.cache
 
 import cn.cotenite.user.commons.utils.RedisKeyCreator
 import cn.cotenite.user.model.domain.dto.UserDetailSimpleView
-import cn.cotenite.user.model.domain.dto.UserDetailView
+import cn.cotenite.utils.UserIdContextHolder
 import cn.hutool.core.util.RandomUtil
 import com.github.benmanes.caffeine.cache.Caffeine
 import org.redisson.api.RedissonClient
@@ -23,7 +23,7 @@ class UserDetailViewCacheRepository(
 ) {
 
     companion object{
-        val LOCAL_CACHE=Caffeine.newBuilder()
+        val VIEW_LOCAL_CACHE=Caffeine.newBuilder()
             .initialCapacity(10000)
             .maximumSize(10000)
             .expireAfterWrite(10, TimeUnit.MINUTES)
@@ -32,7 +32,7 @@ class UserDetailViewCacheRepository(
 
     fun getUserDetailSimpleView(userId: Long): UserDetailSimpleView? {
         val key = RedisKeyCreator.buildNoteDetailSimpleViewKey(userId)
-        var simpleView = LOCAL_CACHE.getIfPresent(userId)
+        var simpleView = VIEW_LOCAL_CACHE.getIfPresent(userId)
         if (simpleView != null) {
             return simpleView
         }
@@ -43,7 +43,7 @@ class UserDetailViewCacheRepository(
             return null
         }
         threadPoolTaskExecutor.execute{
-            LOCAL_CACHE.put(userId,simpleView)
+            VIEW_LOCAL_CACHE.put(userId,simpleView)
         }
         return simpleView
     }
@@ -52,14 +52,31 @@ class UserDetailViewCacheRepository(
         val key = RedisKeyCreator.buildNoteDetailSimpleViewKey(view.id)
         val bucket = redissonClient.getBucket<UserDetailSimpleView>(key)
         bucket.set(view,Duration.ofDays(1).plusHours(RandomUtil.randomLong(24)))
-        LOCAL_CACHE.put(view.id,view)
+        VIEW_LOCAL_CACHE.put(view.id,view)
     }
 
     fun deleteUserDetailCache(id:Long){
         val key = RedisKeyCreator.buildNoteDetailSimpleViewKey(id)
         val bucket = redissonClient.getBucket<UserDetailSimpleView>(key)
         bucket.delete()
-        LOCAL_CACHE.invalidate(id)
+        VIEW_LOCAL_CACHE.invalidate(id)
+    }
+
+    fun addUserId2CacheSet(id:Long){
+        val key = RedisKeyCreator.buildNoteDetailSimpleViewKey(UserIdContextHolder.getId())
+        val set = redissonClient.getSet<Long>(key)
+        if (!set.isExists){
+            set.expire(Duration.ofHours(12).plusHours(RandomUtil.randomLong(12)))
+        }
+        set.add(id)
+    }
+
+
+    fun checkUserExistInCache(id:Long):Boolean{
+        val userId=UserIdContextHolder.getId()
+        val key = RedisKeyCreator.buildUserIdSetKey(userId)
+        val set = redissonClient.getSet<Long>(key)
+        return set.contains(id)
     }
 
 }

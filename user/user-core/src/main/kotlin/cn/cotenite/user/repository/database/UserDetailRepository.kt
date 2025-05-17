@@ -9,6 +9,7 @@ import cn.cotenite.user.model.domain.id
 import org.babyfish.jimmer.sql.ast.mutation.SaveMode
 import org.babyfish.jimmer.sql.kt.KSqlClient
 import org.babyfish.jimmer.sql.kt.ast.expression.eq
+import org.babyfish.jimmer.sql.kt.ast.expression.exists
 import org.springframework.stereotype.Repository
 
 /**
@@ -53,6 +54,17 @@ class UserDetailRepository(
             where(table.id eq userId)
             select(
                 table.fetch(UserDetailSimpleView::class)
+            )
+        }.fetchOne()
+    }
+
+    fun checkUserDetailExist(userId: Long): Boolean {
+        return sqlClient.createQuery(UserDetail::class) {
+            select(
+                exists(subQuery(UserDetail::class) {
+                    where(table.id eq userId)
+                    select(table)
+                })
             )
         }.fetchOne()
     }

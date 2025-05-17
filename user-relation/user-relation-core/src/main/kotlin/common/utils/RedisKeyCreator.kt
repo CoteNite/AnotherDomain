@@ -10,10 +10,10 @@ import cn.cotenite.utils.RedisKeyBase
 object RedisKeyCreator : RedisKeyBase() {
 
 
-    private val PREFIX = "$BASE_KEY:note:"
+    private val PREFIX = "$BASE_KEY:user-relation:"
 
-    fun noteDetailCacheKey(id:Long): String {
-        return "${PREFIX}detail:${id}"
+    fun buildFollowSetRedisKey(id:Long): String {
+        return "${PREFIX}followSet:${id}"
     }
 
 

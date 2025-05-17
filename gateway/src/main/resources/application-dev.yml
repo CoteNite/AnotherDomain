@@ -50,3 +50,19 @@ spring:
           uri: https://localhost:8081
           predicates:
             - Path=/auth/**
+        - id: note
+          uri: https://localhost:8082
+          predicates:
+            - Path=/note/**
+        - id: user-relation
+          uri: https://localhost:8082
+          predicates:
+            - Path=/relation/**
+        - id: oss
+          uri: https://localhost:8084
+          predicates:
+            - Path=/oss/**
+        - id: user
+          uri: https://localhost:8085
+          predicates:
+            - Path=/user/**

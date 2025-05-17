@@ -7,9 +7,9 @@ import cn.cotenite.auth.policy.EmailPolicy
 import cn.cotenite.auth.commons.utils.RedisKeyCreator
 import cn.cotenite.auth.model.domain.dto.dto.ResetPasswordInput
 import cn.cotenite.auth.query.UserQuery
-import cn.cotenite.user.query.UserDetailDubboCommand
-import io.seata.spring.annotation.GlobalTransactional
+import cn.cotenite.user.command.UserDetailDubboCommand
 import org.apache.dubbo.config.annotation.DubboReference
+import org.apache.seata.spring.annotation.GlobalTransactional
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 

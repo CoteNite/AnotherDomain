@@ -1,0 +1,8 @@
+export cn.cotenite.model.domain.Follow
+    -> package cn.cotenite.model.domain.dto
+
+FollowView {
+    followingUserId
+    updateTime
+}
+

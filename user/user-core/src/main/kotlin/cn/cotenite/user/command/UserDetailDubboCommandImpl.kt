@@ -4,7 +4,6 @@ import cn.cotenite.asp.Slf4j.Companion.log
 import cn.cotenite.user.commons.constants.MQConstants
 import cn.cotenite.user.dto.UserDetailCreateDTO
 import cn.cotenite.user.model.domain.dto.UserDetailSaveInput
-import cn.cotenite.user.query.UserDetailDubboCommand
 import cn.cotenite.user.repository.cache.UserDetailViewCacheRepository
 import cn.cotenite.user.repository.database.UserDetailRepository
 import org.apache.dubbo.config.annotation.DubboService
@@ -12,6 +11,7 @@ import org.apache.rocketmq.client.producer.SendCallback
 import org.apache.rocketmq.client.producer.SendResult
 import org.apache.rocketmq.spring.core.RocketMQTemplate
 import org.springframework.messaging.support.MessageBuilder
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
 import org.springframework.web.bind.annotation.CrossOrigin
 
 /**
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.CrossOrigin
 class UserDetailDubboCommandImpl(
     private val userDetailRepository: UserDetailRepository,
     private val cacheRepository: UserDetailViewCacheRepository,
-    private val rocketMQTemplate: RocketMQTemplate
+    private val rocketMQTemplate: RocketMQTemplate,
 ): UserDetailDubboCommand {
 
     override fun createUserDetail(userDetailCreateDTO: UserDetailCreateDTO) {
@@ -53,5 +53,4 @@ class UserDetailDubboCommandImpl(
             1
         )
     }
-
 }

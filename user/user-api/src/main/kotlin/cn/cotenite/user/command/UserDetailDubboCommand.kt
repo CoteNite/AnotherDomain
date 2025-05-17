@@ -1,4 +1,4 @@
-package cn.cotenite.user.query
+package cn.cotenite.user.command
 
 import cn.cotenite.user.dto.UserDetailCreateDTO
 

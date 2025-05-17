@@ -15,6 +15,10 @@ object RedisKeyCreator : RedisKeyBase() {
         return "${PREFIX}simpleView:${id}"
     }
 
+    fun buildUserIdSetKey(id:Long): String {
+        return "${PREFIX}userIdSet:${id}"
+    }
+
 
 
 }

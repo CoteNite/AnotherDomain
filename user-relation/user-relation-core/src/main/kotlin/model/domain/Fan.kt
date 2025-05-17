@@ -1,10 +1,9 @@
 package cn.cotenite.model.domain
 
 import cn.cotenite.note.common.enums.Delete
-import org.babyfish.jimmer.sql.Column
-import org.babyfish.jimmer.sql.Default
-import org.babyfish.jimmer.sql.Entity
-import org.babyfish.jimmer.sql.LogicalDeleted
+import cn.cotenite.note.common.utils.SnowflakeIdGenerator
+import org.babyfish.jimmer.sql.*
+import java.time.LocalDateTime
 import java.time.LocalTime
 
 /**
@@ -15,15 +14,17 @@ import java.time.LocalTime
 @Entity
 interface Fan {
 
+    @Id
+    @GeneratedValue(generatorType = SnowflakeIdGenerator::class)
     val id:Long
 
     val userId:Long
 
     val fansUserId:Long
 
-    val createTime:LocalTime
+    val createTime: LocalDateTime
 
-    val updateTime:LocalTime
+    val updateTime:LocalDateTime
 
     @Column(name = "`delete`")
     @Default("UNDELETE")
