@@ -47,3 +47,6 @@ findProject(":user:user-api")?.name = "user-api"
 include("note")
 include("note:note-core")
 findProject(":note:note-core")?.name = "note-core"
+include("user-relation")
+include("user-relation:user-relation-core")
+findProject(":user-relation:user-relation-core")?.name = "user-relation-core"

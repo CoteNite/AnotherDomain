@@ -35,6 +35,8 @@
             <option value="$PROJECT_DIR$/oss/oss-core" />
             <option value="$PROJECT_DIR$/ratelimter" />
             <option value="$PROJECT_DIR$/user" />
+            <option value="$PROJECT_DIR$/user-relation" />
+            <option value="$PROJECT_DIR$/user-relation/user-relation-core" />
             <option value="$PROJECT_DIR$/user/user-api" />
             <option value="$PROJECT_DIR$/user/user-core" />
           </set>

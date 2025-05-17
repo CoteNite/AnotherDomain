@@ -1,6 +1,6 @@
 spring:
   application:
-    name: note
+    name: user-relation
   profiles:
     active: dev
   cloud:
