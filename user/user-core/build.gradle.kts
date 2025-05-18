@@ -2,7 +2,6 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.spring") version "1.9.20"
     id("org.springframework.boot") version "3.4.3"
-    id("io.spring.dependency-management") version "1.1.7"
     id("com.google.devtools.ksp") version "1.9.20-1.0.14"
 }
 
@@ -23,7 +22,7 @@ val hutoolVersion = "5.8.26"
 
 dependencies {
 
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.4.5")
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:4.2.0")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.3.2")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2023.0.3.2")
@@ -50,9 +49,9 @@ dependencies {
     ksp("org.babyfish.jimmer:jimmer-ksp:${jimmerVersion}")
 
     testImplementation(kotlin("test"))
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.5")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.12.2")
 
 }
 

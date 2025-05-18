@@ -2,7 +2,6 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.spring") version "1.9.20"
     id("org.springframework.boot") version "3.4.3"
-    id("io.spring.dependency-management") version "1.1.7"
     id("com.google.devtools.ksp") version "1.9.20-1.0.14"
 }
 
@@ -22,10 +21,10 @@ val bcryptVersion = "6.2.0"
 val satokenVersion = "1.40.0"
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.4.5")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-validation:3.4.5")
     implementation("org.springframework:spring-context-support:6.2.3")
     implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}")
@@ -35,6 +34,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-bootstrap:4.2.0")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2023.0.3.2")
     implementation("com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2023.0.3.2")
+    implementation("org.springframework.boot:spring-boot-starter-data-cassandra:3.4.5")
 
     implementation("org.apache.dubbo:dubbo:3.3.4")
     implementation("org.apache.dubbo:dubbo-spring-boot-starter:3.3.4")
@@ -49,7 +49,6 @@ dependencies {
     implementation(project(":commons"))
     implementation(project(":id-generator:id-generator-api"))
     implementation(project(":ratelimter"))
-    implementation("org.springframework.boot:spring-boot-starter-data-cassandra")
 
 
     runtimeOnly("mysql:mysql-connector-java:${mysqlConnectVersion}")
@@ -57,10 +56,9 @@ dependencies {
     ksp("org.babyfish.jimmer:jimmer-ksp:${jimmerVersion}")
 
     testImplementation(kotlin("test"))
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.5")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation(project(":Auth:auth-application"))
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.12.2")
 }
 
 tasks.test {

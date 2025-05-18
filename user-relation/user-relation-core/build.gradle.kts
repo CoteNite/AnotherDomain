@@ -2,7 +2,6 @@ plugins {
     kotlin("jvm")
     kotlin("plugin.spring") version "1.9.20"
     id("org.springframework.boot") version "3.4.3"
-    id("io.spring.dependency-management") version "1.1.7"
     id("com.google.devtools.ksp") version "1.9.20-1.0.14"
 }
 
@@ -21,10 +20,10 @@ val hutoolVersion = "5.8.26"
 
 
 dependencies {
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("org.springframework.boot:spring-boot-starter-web:3.4.5")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.19.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
+    implementation("org.springframework.boot:spring-boot-starter-validation:3.4.5")
     implementation("org.springframework:spring-context-support:6.2.3")
 
     implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
@@ -64,10 +63,9 @@ dependencies {
     ksp("org.babyfish.jimmer:jimmer-ksp:${jimmerVersion}")
 
     testImplementation(kotlin("test"))
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test:3.4.5")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation(project(":Auth:auth-application"))
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.12.2")
 }
 
 tasks.test {
